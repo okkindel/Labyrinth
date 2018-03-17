@@ -37,9 +37,10 @@ public class Generator
 		/*Char output current*/
 		System.out.print("");
 		System.out.print("[");
-		for(int i = 0; i <= (3*size)-2; i++){
+		for(int i = 0; i <= (3*size)-3; i++){
 			System.out.print("1, ");
 		}
+		System.out.print("1");
 		System.out.print("],");
 
 		for (int i=1; i<=loop_counter; i++){
