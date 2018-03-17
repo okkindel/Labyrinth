@@ -36,18 +36,18 @@ draw = function () {
 
     let container = $("map");
     let miniMap = $("minimap");
-	let mapObjects = $("mapobjects");
+    let mapObjects = $("mapobjects");
 
     //canvas size
     miniMap.width = mapWidth * mapScale;
     miniMap.height = mapHeight * mapScale;
     mapObjects.width = miniMap.width;
     mapObjects.height = miniMap.height;
-    
+
     let widthDim = (mapWidth * mapScale) + "px";
-	let heightDim = (mapHeight * mapScale) + "px";
-	miniMap.style.width = mapObjects.style.width = container.style.width = widthDim;
-	miniMap.style.height = mapObjects.style.height = container.style.height = heightDim;
+    let heightDim = (mapHeight * mapScale) + "px";
+    miniMap.style.width = mapObjects.style.width = container.style.width = widthDim;
+    miniMap.style.height = mapObjects.style.height = container.style.height = heightDim;
 
     let ctx = miniMap.getContext("2d");
 
@@ -81,7 +81,7 @@ update = function () {
     let objectCtx = mapObjects.getContext("2d");
     objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
 
-    objectCtx.fillRect(		
+    objectCtx.fillRect(
         // draw a dot at the current player position
         player.x * mapScale - 2,
         player.y * mapScale - 2,
@@ -158,8 +158,20 @@ move = function () {
     let newX = player.x + Math.cos(player.rot) * moveStep;
     let newY = player.y + Math.sin(player.rot) * moveStep;
 
+    if (isBlocking(newX, newY))
+        return;
+
     player.x = newX;
     player.y = newY;
+}
+
+//----------------------------------------------------------
+
+function isBlocking(x, y) {
+
+    if (y < 0 || y > mapHeight || x < 0 || x > mapWidth)
+        return true;
+    return (map[Math.floor(y)][Math.floor(x)] != 0);
 }
 
 //----------------------------------------------------------
