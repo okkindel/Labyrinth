@@ -2,12 +2,25 @@
 
 <script src="map.js" type="text/javascript"></script>
 
+<style>
+    canvas#minimap {
+        position: absolute;
+    }
+
+    canvas#minimapobjects {
+        position: absolute;
+    }
+</style>
+
 <head>
     <title>Labirynth</title>
 </head>
 
 <body>
-    <canvas id="minimap"></canvas>
+    <div id="map">
+        <canvas id="minimap"></canvas>
+        <canvas id="mapobjects"></canvas>
+    </div>
 </body>
 
 </html>
