@@ -1,6 +1,6 @@
 # 3D Javascript Maze
 
-3D Labirynth written in Javascript. Maze generator was written earlier in Java.
+3D Labirynth written in Javascript. Maze generator was written earlier in Java. You controll camera by arrows.
 
 ## Game appearance
 
