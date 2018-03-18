@@ -10,7 +10,7 @@ function initScreen() {
         strip.style.height = "0px";
         strip.style.overflow = "hidden";
 
-        strip.style.backgroundColor = "magenta";
+        strip.style.backgroundColor = "lightgrey";
 
         var img = new Image();
         img.src = ("walls.png");
@@ -28,10 +28,10 @@ function initScreen() {
 
 //----------------------------------------------------------
 
-var screenWidth = 900;
-var screenHeight = 600;
+var screenWidth = 1024;
+var screenHeight = 768;
 var screenStrips = [];
-var numoftex = 2;
+var numoftex = 3;
 var stripWidth = 2;
 var fov = 60 * Math.PI / 180;
 var numRays = Math.ceil(screenWidth / stripWidth);
