@@ -2,6 +2,9 @@ function initScreen() {
 
     var screen = $("screen");
 
+    screen.style.height = screenHeight + 'px';
+    screen.style.width = screenWidth + 'px';
+
     for (var i = 0; i < screenWidth; i += stripWidth) {
         var strip = dc("div");
         strip.style.position = "absolute";
@@ -32,7 +35,7 @@ var screenWidth = 1024;
 var screenHeight = 768;
 var screenStrips = [];
 var numoftex = 3;
-var stripWidth = 2;
+var stripWidth = 3;
 var fov = 60 * Math.PI / 180;
 var numRays = Math.ceil(screenWidth / stripWidth);
 var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
@@ -177,3 +180,5 @@ castRay = function (rayAngle, stripIdx) {
         drawRay(xHit, yHit);
     }
 }
+
+//----------------------------------------------------------
