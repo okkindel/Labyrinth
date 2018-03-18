@@ -83,7 +83,7 @@ castRay = function (rayAngle, stripIdx) {
     let wallX;	// the (x,y) map coords of the block
     let wallY;
 
-    let wallIsShaded;
+    let shadow;
 
     // first check against the vertical map/wall lines
     // we do this by moving to the right or left edge of the block we're standing in
@@ -113,7 +113,7 @@ castRay = function (rayAngle, stripIdx) {
             xHit = x;	// save the coordinates of the hit. We only really use these to draw the rays on minimap.
             yHit = y;
 
-            wallIsShaded = true;
+            shadow = true;
 
             break;
         }
@@ -146,7 +146,7 @@ castRay = function (rayAngle, stripIdx) {
                 wallType = map[wallY][wallX];
                 textureX = x % 1;
                 if (up) textureX = 1 - textureX;
-                wallIsShaded = false;
+                shadow = false;
             }
             break;
         }
@@ -178,7 +178,7 @@ castRay = function (rayAngle, stripIdx) {
         let texX = Math.round(textureX * width);
 		if (texX > width - stripWidth)
 			texX = width - stripWidth;
-		texX += (wallIsShaded ? width : 0);
+		texX += (shadow ? width : 0);
 
         strip.img.style.left = -texX + "px";
         drawRay(xHit, yHit);
