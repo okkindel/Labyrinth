@@ -22,7 +22,7 @@ var dc = function (tag) {
 //----------------------------------------------------------
 
 var player = {
-    x: 16,
+    x: 15.5,
     y: 10,
     dir: 0,		// -1 for left or 1 for right
     rot: 0,		// the current angle of rotation
