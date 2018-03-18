@@ -23,15 +23,6 @@ update = function () {
         player.y * mapScale - 2,
         4, 4
     );
-
-    objectCtx.beginPath();
-    objectCtx.moveTo(player.x * mapScale, player.y * mapScale);
-    objectCtx.lineTo(
-        (player.x + Math.cos(player.rot) * 4) * mapScale,
-        (player.y + Math.sin(player.rot) * 4) * mapScale
-    );
-    objectCtx.closePath();
-    objectCtx.stroke();
 }
 
 //----------------------------------------------------------
