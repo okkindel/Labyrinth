@@ -28,11 +28,11 @@ function initScreen() {
 
 //----------------------------------------------------------
 
-var screenWidth = 640;
-var screenHeight = 420;
+var screenWidth = 900;
+var screenHeight = 600;
 var screenStrips = [];
-
-var stripWidth = 4;
+var numoftex = 2;
+var stripWidth = 2;
 var fov = 60 * Math.PI / 180;
 var numRays = Math.ceil(screenWidth / stripWidth);
 var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
@@ -166,8 +166,8 @@ castRay = function (rayAngle, stripIdx) {
         var top = Math.round((screenHeight - height) / 2);
         strip.style.height = height + "px";
         strip.style.top = top + "px";
-        strip.img.style.height = Math.floor(height) + "px";
-        strip.img.style.width = Math.floor(width * 2) + "px";
+        strip.img.style.height = Math.floor(height * numoftex) + "px";
+        strip.img.style.width = Math.floor(width) + "px";
         strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
 
         let texX = Math.round(textureX * width);
