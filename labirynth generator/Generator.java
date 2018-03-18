@@ -1,5 +1,3 @@
-/*Copyright by Maciej Hajduk & Maciej Dziadyk*/
-
 import java.util.ArrayList;
 import java.util.*;
 
