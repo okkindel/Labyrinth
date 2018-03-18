@@ -53,30 +53,30 @@ move = function () {
 //----------------------------------------------------------
 
 isCollision = function (fromX, fromY, toX, toY, radius) {
-    
+
     let position = {
         x: fromX,
         y: fromY
     };
-    
+
     if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth)
-    return position;
-    
+        return position;
+
     let blockX = Math.floor(toX);
     let blockY = Math.floor(toY);
-    
+
     if (isBlocking(blockX, blockY)) {
         return position;
     }
-    
+
     position.x = toX;
     position.y = toY;
-    
+
     let top = isBlocking(blockX, blockY - 1);
     let bottom = isBlocking(blockX, blockY + 1);
     let left = isBlocking(blockX - 1, blockY);
     let right = isBlocking(blockX + 1, blockY);
-    
+
     if (top != 0 && toY - blockY < radius) {
         toY = position.y = blockY + radius;
     }
@@ -89,7 +89,7 @@ isCollision = function (fromX, fromY, toX, toY, radius) {
     if (right != 0 && blockX + 1 - toX < radius) {
         toX = position.x = blockX + 1 - radius;
     }
-    
+
     // is tile to the top-left a wall
     if (isBlocking(blockX - 1, blockY - 1) != 0 && !(top != 0 && left != 0)) {
         var dx = toX - blockX;
@@ -98,7 +98,7 @@ isCollision = function (fromX, fromY, toX, toY, radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + radius;
             else
-            toY = position.y = blockY + radius;
+                toY = position.y = blockY + radius;
         }
     }
     // is tile to the top-right a wall
@@ -107,9 +107,9 @@ isCollision = function (fromX, fromY, toX, toY, radius) {
         var dy = toY - blockY;
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
-            toX = position.x = blockX + 1 - radius;
+                toX = position.x = blockX + 1 - radius;
             else
-            toY = position.y = blockY + radius;
+                toY = position.y = blockY + radius;
         }
     }
     // is tile to the bottom-left a wall
@@ -118,9 +118,9 @@ isCollision = function (fromX, fromY, toX, toY, radius) {
         var dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
-            toX = position.x = blockX + radius;
+                toX = position.x = blockX + radius;
             else
-            toY = position.y = blockY + 1 - radius;
+                toY = position.y = blockY + 1 - radius;
         }
     }
     // is tile to the bottom-right a wall
@@ -129,21 +129,21 @@ isCollision = function (fromX, fromY, toX, toY, radius) {
         var dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
-            toX = position.x = blockX + 1 - radius;
+                toX = position.x = blockX + 1 - radius;
             else
-            toY = position.y = blockY + 1 - radius;
+                toY = position.y = blockY + 1 - radius;
         }
     }
-    
+
     return position;
 }
 
 //----------------------------------------------------------
 
 function isBlocking(x, y) {
-    
+
     if (y < 0 || y >= mapHeight || x < 0 || x >= mapWidth)
-    return true;
+        return true;
     return (map[Math.floor(y)][Math.floor(x)] != 0);
 }
 
@@ -152,7 +152,7 @@ function isBlocking(x, y) {
 function drawRay(rayX, rayY) {
     let mapObjects = $("mapobjects");
     let objectCtx = mapObjects.getContext("2d");
-    
+
     objectCtx.strokeStyle = "rgba(100,100,100,0.3)";
     objectCtx.lineWidth = 0.5;
     objectCtx.beginPath();

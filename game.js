@@ -22,7 +22,7 @@ function initScreen() {
 
         // assign the image to a property on the strip element so we have easy access to the image later
         strip.appendChild(img);
-        strip.img = img;	
+        strip.img = img;
 
         screenStrips.push(strip);
         screen.appendChild(strip);
@@ -72,7 +72,6 @@ castRay = function (rayAngle, stripIdx) {
     let right = (rayAngle > Math.PI * 2 * 0.75 || rayAngle < Math.PI * 2 * 0.25);
     let up = (rayAngle < 0 || rayAngle > Math.PI);
     let wallType = 0;
-    let wallIsHorizontal = false;
     let angleSin = Math.sin(rayAngle);
     let angleCos = Math.cos(rayAngle);
 
@@ -83,6 +82,8 @@ castRay = function (rayAngle, stripIdx) {
     let textureX;	// the x-coord on the texture of the block, ie. what part of the texture are we going to render
     let wallX;	// the (x,y) map coords of the block
     let wallY;
+
+    let wallIsShaded;
 
     // first check against the vertical map/wall lines
     // we do this by moving to the right or left edge of the block we're standing in
@@ -112,7 +113,7 @@ castRay = function (rayAngle, stripIdx) {
             xHit = x;	// save the coordinates of the hit. We only really use these to draw the rays on minimap.
             yHit = y;
 
-            wallIsHorizontal = true;
+            wallIsShaded = true;
 
             break;
         }
@@ -145,6 +146,7 @@ castRay = function (rayAngle, stripIdx) {
                 wallType = map[wallY][wallX];
                 textureX = x % 1;
                 if (up) textureX = 1 - textureX;
+                wallIsShaded = false;
             }
             break;
         }
@@ -170,12 +172,14 @@ castRay = function (rayAngle, stripIdx) {
         strip.style.height = height + "px";
         strip.style.top = top + "px";
         strip.img.style.height = Math.floor(height * numoftex) + "px";
-        strip.img.style.width = Math.floor(width) + "px";
+        strip.img.style.width = Math.floor(width * 2) + "px";
         strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
 
         let texX = Math.round(textureX * width);
-        if (texX > width - stripWidth)
-            texX = width - stripWidth;
+		if (texX > width - stripWidth)
+			texX = width - stripWidth;
+		texX += (wallIsShaded ? width : 0);
+
         strip.img.style.left = -texX + "px";
         drawRay(xHit, yHit);
     }
