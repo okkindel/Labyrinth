@@ -123,32 +123,31 @@ public class Generator
 	private void alternative_out()
 	{
 		Random setGenerator = new Random();
-		int a, b, c, x;
+		int [] a = new int[3];
+		int x;
 
 		try{
 			System.out.print("\n[1, ");
 			for (int i=1; i <=size-1; i++)
 			{
 				// kinda ugly, i know :/
-				x = setGenerator.nextInt(100);
-				if (x < 2) a = 2; else if (x < 4) a = 3;
-				else a = 1; x = setGenerator.nextInt(100);
-				if (x < 2) b = 2; else if (x < 4) b = 3;
-				else b = 1; x = setGenerator.nextInt(100);
-				if (x < 2) c = 2; else if (x < 4) c = 3;
-				else c = 1;
+				for (int j=0; j<3; j++) {
+					x = setGenerator.nextInt(100);
+					if (x < 2) a[j] = 2; else if (x < 4) a[j] = 3;
+					else a[j] = 1;
+				}
 
 				if (!cells.get(i).wall && cells.get(i).bottom)
-					System.out.print(a+", "+b+", "+c+", ");
+					System.out.print(a[0]+", "+a[1]+", "+a[2]+", ");
 				if (!cells.get(i).wall && !cells.get(i).bottom)
 					System.out.print("0, 0, 0, ");
 				if (cells.get(i).wall && !cells.get(i).bottom)
-					System.out.print("0, "+a+", 0, ");
+					System.out.print("0, "+a[0]+", 0, ");
 				if (cells.get(i).wall && cells.get(i).bottom){
 					if (cells.get(i + 1).bottom)
-						System.out.print(a+", "+b+", 0, ");
+						System.out.print(a[0]+", "+a[1]+", 0, ");
 					else if (!cells.get(i + 1).bottom)
-						System.out.print("0, "+a+", "+b+", ");
+						System.out.print("0, "+a[0]+", "+a[1]+", ");
 				}
 			}
 			System.out.print("1],");
