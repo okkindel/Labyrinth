@@ -4,7 +4,7 @@ var player = {
     dir: 0,		// -1 for left or 1 for right
     rot: 0,		// the current angle of rotation
     speed: 0,		// forward 1 backwards -1
-    moveSpeed: 0.15,	// step/update
+    moveSpeed: 0.1,	// step/update
     rotSpeed: 6		// rotate each update (in degrees)
 }
 
