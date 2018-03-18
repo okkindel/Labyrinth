@@ -36,7 +36,7 @@ var screenHeight = 768;
 var screenStrips = [];
 var numoftex = 3;
 var stripWidth = 3;
-var fov = 60 * Math.PI / 180;
+var fov = 80 * Math.PI / 180;
 var numRays = Math.ceil(screenWidth / stripWidth);
 var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 
