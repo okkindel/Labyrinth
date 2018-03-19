@@ -76,7 +76,7 @@ castRay = function (rayAngle, stripIdx) {
     let angleSin = Math.sin(rayAngle);
     let angleCos = Math.cos(rayAngle);
 
-    let dist = 0;	// the distance to the block we hit
+    let distance = 0;	// the distance to the block we hit
     let xHit = 0; 	// the x and y coord of where the ray hit the block
     let yHit = 0;
 
@@ -105,13 +105,13 @@ castRay = function (rayAngle, stripIdx) {
 
         if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
             spriteMap[wallY][wallX].visible = true;
-            visibleSprites.push(spriteMap[wallY][wallX]);
+            visible.push(spriteMap[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {
             let distX = x - player.x;
             let distY = y - player.y;
-            dist = distX * distX + distY * distY;
+            distance = distX * distX + distY * distY;
             
             wallType = map[wallY][wallX];           // type of wall
             textureX = y % 1;	                    // where exactly on the wall
@@ -127,7 +127,7 @@ castRay = function (rayAngle, stripIdx) {
     }
 
     // once we hit a map block, we check if there is found one in the vertical turn. 
-    // we'll know that if dist !=0 -> we only register this hit if this distance is smaller.
+    // we'll know that if distance !=0 -> we only register this hit if this distance is smaller.
     var slope = angleCos / angleSin;
     let dYHor = up ? -1 : 1;
     let dXHor = dYHor * slope;
@@ -140,15 +140,15 @@ castRay = function (rayAngle, stripIdx) {
 
         if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
             spriteMap[wallY][wallX].visible = true;
-            visibleSprites.push(spriteMap[wallY][wallX]);
+            visible.push(spriteMap[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {
             let distX = x - player.x;
             let distY = y - player.y;
             let blockDist = distX * distX + distY * distY;
-            if (!dist || blockDist < dist) {
-                dist = blockDist;
+            if (!distance || blockDist < distance) {
+                distance = blockDist;
                 xHit = x;
                 yHit = y;
 
@@ -163,14 +163,14 @@ castRay = function (rayAngle, stripIdx) {
         y += dYHor;
     }
 
-    if (dist) {
+    if (distance) {
         let strip = screenStrips[stripIdx];
-        dist = Math.sqrt(dist);
+        distance = Math.sqrt(distance);
         // fish eye
         // distorted_dist = correct_dist / cos(relative_angle_of_ray)
-        dist = dist * Math.cos(player.rotation - rayAngle);
+        distance = distance * Math.cos(player.rotation - rayAngle);
         // calc position, height and width of the wall strip
-        let height = Math.round(viewDist / dist);
+        let height = Math.round(viewDist / distance);
         // stretch the texture to a factor to make it fill the strip correctly
         let width = height * stripWidth;
         // since everything is centered on the x-axis, move it half 

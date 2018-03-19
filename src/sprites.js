@@ -7,8 +7,8 @@ initSprites = function () {
     }
 
     var screen = $('screen');
-    for (var i = 0; i < mapItems.length; i++) {
-        var sprite = mapItems[i];
+    for (var i = 0; i < items.length; i++) {
+        var sprite = items[i];
         var itemType = itemTypes[sprite.type];
         var img = dc('img');
         img.src = itemType.img;
@@ -24,10 +24,10 @@ initSprites = function () {
 
 //----------------------------------------------------------
 
-var mapItems = [];
+var items = [];
 var spriteMap = [];
-var visibleSprites = [];
-var oldVisibleSprites = [];
+var visible = [];
+var nonVisible = [];
 var itemTypes = [
     { img: 'src/assets/bush.png', block: false },
 ];
@@ -46,7 +46,7 @@ addItems = function () {
                         x: x,
                         y: y
                     }
-                    mapItems.push(item)
+                    items.push(item)
                 }
         }
     }
@@ -55,21 +55,21 @@ addItems = function () {
 //----------------------------------------------------------
 
 clearSprites = function () {
-    oldVisibleSprites = [];
-    for (var i = 0; i < visibleSprites.length; i++) {
-        var sprite = visibleSprites[i];
-        oldVisibleSprites[i] = sprite;
+    nonVisible = [];
+    for (var i = 0; i < visible.length; i++) {
+        var sprite = visible[i];
+        nonVisible[i] = sprite;
         sprite.visible = false;
     }
-    visibleSprites = [];
+    visible = [];
 }
 
 //----------------------------------------------------------
 
 renderSprites = function () {
-    for (let i = 0; i < visibleSprites.length; i++) {
+    for (let i = 0; i < visible.length; i++) {
 
-        let sprite = visibleSprites[i];
+        let sprite = visible[i];
         let img = sprite.img;
         img.style.display = "block";
 
@@ -95,9 +95,9 @@ renderSprites = function () {
     }
 
     // hide the sprites that are no longer visible
-    for (let i = 0; i < oldVisibleSprites.length; i++) {
-        let sprite = oldVisibleSprites[i];
-        if (visibleSprites.indexOf(sprite) < 0) {
+    for (let i = 0; i < nonVisible.length; i++) {
+        let sprite = nonVisible[i];
+        if (visible.indexOf(sprite) < 0) {
             sprite.visible = false;
             sprite.img.style.display = "none";
         }

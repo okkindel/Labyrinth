@@ -174,7 +174,7 @@ function drawRay(rayX, rayY) {
 
 //----------------------------------------------------------
 
-keys = function () {
+addKeys = function () {
 
     document.onkeydown = function (event) {
         event = event || window.event;

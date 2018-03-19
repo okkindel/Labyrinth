@@ -3,7 +3,7 @@ init = function () {
     mapWidth = map[0].length;
     mapHeight = map.length;
 
-    keys();
+    addKeys();
     initScreen();
     initSprites();
     drawMap();
