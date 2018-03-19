@@ -13,9 +13,9 @@ var player = {
 
 update = function () {
     let miniMap = $("minimap");
-    let mapObjects = $("mapobjects");
+    let objects = $("objects");
 
-    let objectCtx = mapObjects.getContext("2d");
+    let objectCtx = objects.getContext("2d");
     objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
 
     objectCtx.fillRect(
@@ -158,8 +158,8 @@ function isBlocking(x, y) {
 //----------------------------------------------------------
 
 function drawRay(rayX, rayY) {
-    let mapObjects = $("mapobjects");
-    let objectCtx = mapObjects.getContext("2d");
+    let objects = $("objects");
+    let objectCtx = objects.getContext("2d");
 
     objectCtx.strokeStyle = "rgba(100,100,100,0.3)";
     objectCtx.lineWidth = 0.5;

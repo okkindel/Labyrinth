@@ -32,18 +32,18 @@ drawMap = function () {
 
     let container = $("map");
     let miniMap = $("minimap");
-    let mapObjects = $("mapobjects");
+    let objects = $("objects");
 
     //canvas size
     miniMap.width = mapWidth * mapScale;
     miniMap.height = mapHeight * mapScale;
-    mapObjects.width = miniMap.width;
-    mapObjects.height = miniMap.height;
+    objects.width = miniMap.width;
+    objects.height = miniMap.height;
 
     let widthDim = (mapWidth * mapScale) + "px";
     let heightDim = (mapHeight * mapScale) + "px";
-    miniMap.style.width = mapObjects.style.width = container.style.width = widthDim;
-    miniMap.style.height = mapObjects.style.height = container.style.height = heightDim;
+    miniMap.style.width = objects.style.width = container.style.width = widthDim;
+    miniMap.style.height = objects.style.height = container.style.height = heightDim;
 
     let ctx = miniMap.getContext("2d");
 
