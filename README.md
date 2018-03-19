@@ -4,7 +4,7 @@
 
 ## Game appearance
 
-<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/screen.png?raw=true"></p>
+<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/assets/screen.png?raw=true"></p>
 
 ## Live example
 

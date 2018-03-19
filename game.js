@@ -16,7 +16,7 @@ function initScreen() {
         strip.style.backgroundColor = "transparent";
 
         var img = new Image();
-        img.src = ("walls.png");
+        img.src = ("assets/walls.png");
         img.style.position = "absolute";
         img.style.left = "0px";
 

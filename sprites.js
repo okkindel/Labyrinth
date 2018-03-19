@@ -29,7 +29,7 @@ var spriteMap = [];
 var visibleSprites = [];
 var oldVisibleSprites = [];
 var itemTypes = [
-    { img: 'sprites/bush.png', block: false },
+    { img: 'assets/bush.png', block: false },
 ];
 
 //----------------------------------------------------------
