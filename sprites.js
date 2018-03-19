@@ -26,22 +26,19 @@ var spriteMap;
 var visibleSprites = [];
 var oldVisibleSprites = [];
 var itemTypes = [
-    { img: 'sprites/table-chairs.png', block: true },	// 0
-    { img: 'sprites/armor.png', block: true },		// 1
-    { img: 'sprites/plant-green.png', block: true },	// 2
-    { img: 'sprites/lamp.png', block: false }			// 3
+    { img: 'sprites/bush.png', block: false },
 ];
 
 //----------------------------------------------------------
 
 var mapItems = [
-    { type: 3, x: 16, y: 14 },
-    { type: 3, x: 15, y: 17 },
-    { type: 3, x: 14, y: 15 },
-    { type: 3, x: 14, y: 16 },
-    { type: 3, x: 19, y: 22 },
-    { type: 3, x: 08, y: 18 },
-    { type: 3, x: 17, y: 18 }
+    { type: 0, x: 16, y: 14 },
+    { type: 0, x: 15, y: 17 },
+    { type: 0, x: 14, y: 15 },
+    { type: 0, x: 14, y: 16 },
+    { type: 0, x: 19, y: 22 },
+    { type: 0, x: 08, y: 18 },
+    { type: 0, x: 17, y: 18 }
 ];
 
 //----------------------------------------------------------
@@ -74,34 +71,26 @@ renderSprites = function () {
         let dx = sprite.x + 0.5 - player.x;
         let dy = sprite.y + 0.5 - player.y;
 
-        // distance to sprite
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        // sprite angle relative to viewing angle
+        let distance = Math.sqrt(dx * dx + dy * dy);
         let spriteAngle = Math.atan2(dy, dx) - player.rotation;
-
-        // size of the sprite
-        let size = viewDist / (Math.cos(spriteAngle) * dist);
+        let size = viewDist / (Math.cos(spriteAngle) * distance);
 
         if (size <= 0) continue;
 
         // x-position on screen
         let x = Math.tan(spriteAngle) * viewDist;
         img.style.left = (screenWidth / 2 + x - size / 2) + "px";
-        // y is constant since we keep all sprites at the same height and vertical position
+        // y is constant
         img.style.top = ((screenHeight - size) / 2) + "px";
-        
-        let dbx = sprite.x - player.x;
-        let dby = sprite.y - player.y;
-        
-        img.style.width = size + "px";
-        img.style.height = size + "px";
-        
-        // let blockDist = dbx * dbx + dby * dby;
-        // img.style.zIndex = -Math.floor(blockDist * 1000);
+    
+		var dbx = sprite.x - player.x;
+		var dby = sprite.y - player.y;
 
-        console.log("widze" + sprite.x + ", " + sprite.y);
-        console.log(sprite.img);
+		img.style.width = size + "px";
+		img.style.height =  size + "px";
+
+		// var blockDist = dbx*dbx + dby*dby;
+		img.style.zIndex = Math.floor(size);
     }
 
     // hide the sprites that are no longer visible
