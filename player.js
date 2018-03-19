@@ -3,9 +3,10 @@ var player = {
     y: 16.5,
     direction: 0,		// -1 for left or 1 for right
     rotation: 0,		// the current angle of rotationation
-    speed: 0,		// forward 1 backwards -1
-    moveSpeed: 0.1,	// step/update
-    rotationSpeed: 6		// rotationate each update (in degrees)
+    horizontal: 0,
+    vertical: 0,		    // forward 1 backwards -1
+    moveSpeed: 0.1,	    // step/update
+    rotationvertical: 6	// rotationate each update (in degrees)
 }
 
 //----------------------------------------------------------
@@ -28,13 +29,25 @@ update = function () {
 //----------------------------------------------------------
 
 move = function () {
-    let moveStep = player.speed * player.moveSpeed;
-    player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
+    
+    let moveStep;
+    if (player.vertical)
+        moveStep = player.vertical * player.moveSpeed;
+    else
+        moveStep = player.horizontal * player.moveSpeed;
+
+    player.rotation += player.direction * player.rotationvertical * Math.PI / 180;
     while (player.rotation < 0) player.rotation += Math.PI * 2;
     while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
 
-    let newX = player.x + Math.cos(player.rotation) * moveStep;
-    let newY = player.y + Math.sin(player.rotation) * moveStep;
+    let newX, newY;
+    if (player.vertical) {
+        newX = player.x + Math.cos(player.rotation) * moveStep;
+        newY = player.y + Math.sin(player.rotation) * moveStep;
+    } else {
+        newX = player.x + Math.cos(player.rotation + 90 * Math.PI / 180) * moveStep;
+        newY = player.y + Math.sin(player.rotation + 90 * Math.PI / 180) * moveStep;
+    }
 
     let position = isCollision(player.x, player.y, newX, newY, 0.35);
     player.x = position.x; // set new positionition
@@ -171,11 +184,19 @@ keys = function () {
         switch (event.keyCode) {
 
             case 38: // up
-                player.speed = 1;
+                player.vertical = 1;
                 break;
 
             case 40: // down
-                player.speed = -1;
+                player.vertical = -1;
+                break;
+
+            case 65: // left
+                player.horizontal = -1;
+                break;
+
+            case 68: // right
+                player.horizontal = 1;
                 break;
 
             case 37: // left
@@ -194,7 +215,10 @@ keys = function () {
         switch (event.keyCode) {
             case 38:
             case 40:
-                player.speed = 0;
+            case 65:
+            case 68:
+                player.vertical = 0;
+                player.horizontal = 0;
                 break;
             case 37:
             case 39:
