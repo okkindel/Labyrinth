@@ -6,7 +6,7 @@ var player = {
     vertical: 0,		// forward 1 backwards -1
     horizontal: 0,      // right 1 left -1
     moveSpeed: 0.1,	    // step/update
-    rotationvertical: 6	// rotationate each update (in degrees)
+    rotationSpeed: 6	// rotation each update (in degrees)
 }
 
 //----------------------------------------------------------
@@ -35,7 +35,7 @@ move = function () {
     else
         moveStep = player.horizontal * player.moveSpeed;
 
-    player.rotation += player.direction * player.rotationvertical * Math.PI / 180;
+    player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
     while (player.rotation < 0) player.rotation += Math.PI * 2;
     while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
 
