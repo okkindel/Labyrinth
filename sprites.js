@@ -1,4 +1,6 @@
 initSprites = function () {
+
+    addItems();
     spriteMap = [];
     for (var y = 0; y < map.length; y++) {
         spriteMap[y] = [];
@@ -22,7 +24,8 @@ initSprites = function () {
 
 //----------------------------------------------------------
 
-var spriteMap;
+var mapItems = [];
+var spriteMap = [];
 var visibleSprites = [];
 var oldVisibleSprites = [];
 var itemTypes = [
@@ -31,15 +34,23 @@ var itemTypes = [
 
 //----------------------------------------------------------
 
-var mapItems = [
-    { type: 0, x: 16, y: 14 },
-    { type: 0, x: 15, y: 17 },
-    { type: 0, x: 14, y: 15 },
-    { type: 0, x: 14, y: 16 },
-    { type: 0, x: 19, y: 22 },
-    { type: 0, x: 08, y: 18 },
-    { type: 0, x: 17, y: 18 }
-];
+addItems = function () {
+    for (let y = 0; y < mapHeight; y++) {
+        for (let x = 0; x < mapWidth; x++) {
+            let wall = map[y][x];
+
+            if (wall == 0)
+                if (Math.random() * 100 < 2) {
+                    let item = {
+                        type: 0,
+                        x: x,
+                        y: y
+                    }
+                    mapItems.push(item)
+                }
+        }
+    }
+}
 
 //----------------------------------------------------------
 
@@ -62,11 +73,11 @@ clearSprites = function () {
 
 renderSprites = function () {
     for (let i = 0; i < visibleSprites.length; i++) {
-        
+
         let sprite = visibleSprites[i];
         let img = sprite.img;
         img.style.display = "block";
-        
+
         // translate position to viewer space
         let dx = sprite.x + 0.5 - player.x;
         let dy = sprite.y + 0.5 - player.y;
@@ -82,15 +93,10 @@ renderSprites = function () {
         img.style.left = (screenWidth / 2 + x - size / 2) + "px";
         // y is constant
         img.style.top = ((screenHeight - size) / 2) + "px";
-    
-		var dbx = sprite.x - player.x;
-		var dby = sprite.y - player.y;
 
-		img.style.width = size + "px";
-		img.style.height =  size + "px";
-
-		// var blockDist = dbx*dbx + dby*dby;
-		img.style.zIndex = Math.floor(size);
+        img.style.width = size + "px";
+        img.style.height = size + "px";
+        img.style.zIndex = Math.floor(size);
     }
 
     // hide the sprites that are no longer visible

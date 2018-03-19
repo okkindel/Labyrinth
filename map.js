@@ -65,13 +65,13 @@ drawMap = function () {
             }
 
             if (spriteMap[y][x]) {
-				ctx.fillStyle = "rgb(100,200,100)";
-				ctx.fillRect(
-					x * mapScale + mapScale*0.25,
-					y * mapScale + mapScale*0.25,
-					mapScale*0.5,mapScale*0.5
-				);
-			}
+                ctx.fillStyle = "rgb(100,100,100)";
+                ctx.fillRect(
+                    x * mapScale + mapScale * 0.25,
+                    y * mapScale + mapScale * 0.25,
+                    mapScale * 0.5, mapScale * 0.5
+                );
+            }
         }
     }
     update();
@@ -83,8 +83,8 @@ cycle = function () {
     move();
     update();
     clearSprites();
-	castRays();
-	renderSprites();
+    castRays();
+    renderSprites();
     setTimeout(cycle, 1000 / 30);
 }
 

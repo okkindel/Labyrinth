@@ -78,8 +78,7 @@ castRay = function (rayAngle, stripIdx) {
     let dist = 0;	// the distance to the block we hit
     let xHit = 0; 	// the x and y coord of where the ray hit the block
     let yHit = 0;
-    let xWallHit = 0;
-    let yWallHit = 0;
+
     let textureX;	// the x-coord on the texture of the block, ie. what part of the texture are we going to render
     let wallX;	// the (x,y) map coords of the block
     let wallY;
@@ -119,12 +118,7 @@ castRay = function (rayAngle, stripIdx) {
 
             xHit = x;	// save the coordinates of the hit. We only really use these to draw the rays on minimap.
             yHit = y;
-
-            xWallHit = wallX;
-            yWallHit = wallY;
-
             shadow = true;
-
             break;
         }
         x += dXVer;
@@ -158,8 +152,6 @@ castRay = function (rayAngle, stripIdx) {
                 dist = blockDist;
                 xHit = x;
                 yHit = y;
-                xWallHit = wallX;
-                yWallHit = wallY;
 
                 wallType = map[wallY][wallX];
                 textureX = x % 1;
@@ -199,7 +191,6 @@ castRay = function (rayAngle, stripIdx) {
         texX += (shadow ? width : 0);
 
         strip.img.style.left = -texX + "px";
-
 		strip.style.zIndex = Math.floor(height);
 
         drawRay(xHit, yHit);
