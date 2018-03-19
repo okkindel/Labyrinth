@@ -1,11 +1,11 @@
 var player = {
     x: 15.5,
     y: 16.5,
-    dir: 0,		// -1 for left or 1 for right
-    rot: 0,		// the current angle of rotation
+    direction: 0,		// -1 for left or 1 for right
+    rotation: 0,		// the current angle of rotationation
     speed: 0,		// forward 1 backwards -1
     moveSpeed: 0.1,	// step/update
-    rotSpeed: 6		// rotate each update (in degrees)
+    rotationSpeed: 6		// rotationate each update (in degrees)
 }
 
 //----------------------------------------------------------
@@ -29,12 +29,12 @@ update = function () {
 
 move = function () {
     let moveStep = player.speed * player.moveSpeed;
-    player.rot += player.dir * player.rotSpeed * Math.PI / 180;
-    while (player.rot < 0) player.rot += Math.PI * 2;
-    while (player.rot >= Math.PI * 2) player.rot -= Math.PI * 2;
+    player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
+    while (player.rotation < 0) player.rotation += Math.PI * 2;
+    while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
 
-    let newX = player.x + Math.cos(player.rot) * moveStep;
-    let newY = player.y + Math.sin(player.rot) * moveStep;
+    let newX = player.x + Math.cos(player.rotation) * moveStep;
+    let newY = player.y + Math.sin(player.rotation) * moveStep;
 
     let position = isCollision(player.x, player.y, newX, newY, 0.35);
     player.x = position.x; // set new positionition
@@ -135,7 +135,11 @@ function isBlocking(x, y) {
 
     if (y < 0 || y >= mapHeight || x < 0 || x >= mapWidth)
         return true;
-    return (map[Math.floor(y)][Math.floor(x)] != 0);
+    if (map[Math.floor(y)][Math.floor(x)] != 0)
+        return true;
+    if (spriteMap[Math.floor(y)][Math.floor(x)] && spriteMap[Math.floor(y)][Math.floor(x)].block)
+        return true;
+    return false;
 }
 
 //----------------------------------------------------------
@@ -158,7 +162,7 @@ function drawRay(rayX, rayY) {
 
 //----------------------------------------------------------
 
-bindKeys = function () {
+keys = function () {
 
     document.onkeydown = function (event) {
         event = event || window.event;
@@ -175,11 +179,11 @@ bindKeys = function () {
                 break;
 
             case 37: // left
-                player.dir = -1;
+                player.direction = -1;
                 break;
 
             case 39: // right
-                player.dir = 1;
+                player.direction = 1;
                 break;
         }
     }
@@ -194,7 +198,7 @@ bindKeys = function () {
                 break;
             case 37:
             case 39:
-                player.dir = 0;
+                player.direction = 0;
                 break;
         }
     }

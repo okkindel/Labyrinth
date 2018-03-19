@@ -37,7 +37,7 @@ var screenStrips = [];
 var numoftex = 3;
 var stripWidth = 2;
 var fov = 80 * Math.PI / 180;
-var numRays = Math.ceil(screenWidth / stripWidth);
+var numofrays = Math.ceil(screenWidth / stripWidth);
 var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 
 //----------------------------------------------------------
@@ -45,16 +45,16 @@ var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 castRays = function () {
     let stripIdx = 0;
 
-    for (let i = 0; i < numRays; i++) {
+    for (let i = 0; i < numofrays; i++) {
         // where on the screen does ray go through?
-        let rayScreenPos = (-numRays / 2 + i) * stripWidth;
+        let rayScreenPos = (-numofrays / 2 + i) * stripWidth;
         // the distance from the viewer to the point on the screen, simply Pythagoras.
         let rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
         // the angle of the ray, relative to the viewing direction a = sin(A) * c
         let rayAngle = Math.asin(rayScreenPos / rayViewDist);
 
         castRay(
-            player.rot + rayAngle, 	// add the players viewing direction to get the angle in world space
+            player.rotation + rayAngle, 	// add the players viewing direction to get the angle in world space
             stripIdx++
         );
     }
@@ -100,6 +100,11 @@ castRay = function (rayAngle, stripIdx) {
         let wallX = Math.floor(x + (right ? 0 : -1));
         let wallY = Math.floor(y);
 
+        if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
+			spriteMap[wallY][wallX].visible = true;
+			visibleSprites.push(spriteMap[wallY][wallX]);
+		}
+
         // is this point inside a wall block?
         if (map[wallY][wallX] > 0) {
             let distX = x - player.x;
@@ -134,6 +139,12 @@ castRay = function (rayAngle, stripIdx) {
     while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
         let wallY = Math.floor(y + (up ? -1 : 0));
         let wallX = Math.floor(x);
+
+        if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
+			spriteMap[wallY][wallX].visible = true;
+            visibleSprites.push(spriteMap[wallY][wallX]);
+		}
+
         if (map[wallY][wallX] > 0) {
             let distX = x - player.x;
             let distY = y - player.y;
@@ -159,7 +170,7 @@ castRay = function (rayAngle, stripIdx) {
         dist = Math.sqrt(dist);
         // use perpendicular distance to adjust for fish eye
         // distorted_dist = correct_dist / cos(relative_angle_of_ray)
-        dist = dist * Math.cos(player.rot - rayAngle);
+        dist = dist * Math.cos(player.rotation - rayAngle);
         // now calc the position, height and width of the wall strip
         // "real" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
         // thus the height on the screen is equal to wall_height_real * viewDist / dist
@@ -168,7 +179,7 @@ castRay = function (rayAngle, stripIdx) {
         let width = height * stripWidth;
         // top placement is easy since everything is centered on the x-axis, so we simply move
         // it half way down the screen and then half the wall height back up.
-        var top = Math.round((screenHeight - height) / 2);
+        let top = Math.round((screenHeight - height) / 2);
         strip.style.height = height + "px";
         strip.style.top = top + "px";
         strip.img.style.height = Math.floor(height * numoftex) + "px";

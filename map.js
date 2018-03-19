@@ -3,9 +3,10 @@ init = function () {
     mapWidth = map[0].length;
     mapHeight = map.length;
 
-    bindKeys();
+    keys();
     initScreen();
-    draw();
+    initSprites();
+    drawMap();
     cycle();
 }
 setTimeout(init, 1);
@@ -27,7 +28,7 @@ var mapScale = 8;	    // How many pixels to draw a map block
 
 //----------------------------------------------------------
 
-draw = function () {
+drawMap = function () {
 
     let container = $("map");
     let miniMap = $("minimap");
@@ -62,6 +63,15 @@ draw = function () {
                     mapScale
                 );
             }
+
+            if (spriteMap[y][x]) {
+				ctx.fillStyle = "rgb(100,200,100)";
+				ctx.fillRect(
+					x * mapScale + mapScale*0.25,
+					y * mapScale + mapScale*0.25,
+					mapScale*0.5,mapScale*0.5
+				);
+			}
         }
     }
     update();
@@ -72,7 +82,9 @@ draw = function () {
 cycle = function () {
     move();
     update();
-    castRays();
+    clearSprites();
+	castRays();
+	renderSprites();
     setTimeout(cycle, 1000 / 30);
 }
 
