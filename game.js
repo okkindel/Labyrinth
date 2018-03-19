@@ -84,8 +84,7 @@ castRay = function (rayAngle, stripIdx) {
     let wallX;	    // the (x,y) map coords of the block
     let wallY;
 
-
-    let shadow;
+    let shadow; // vertical walls shadowed
 
     // check vertical wall lines by moving across edge of the block 
     // we're standing in then moving in 1 map unit steps horizontally
