@@ -55,11 +55,6 @@ addItems = function () {
 //----------------------------------------------------------
 
 clearSprites = function () {
-    // Clear the visible sprites array but keep
-    // a copy in oldVisibleSprites for later.
-    // Also mark all the sprites as not visible
-    // so they can be added to visibleSprites
-    // again during raycasting.
     oldVisibleSprites = [];
     for (var i = 0; i < visibleSprites.length; i++) {
         var sprite = visibleSprites[i];

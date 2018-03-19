@@ -47,7 +47,6 @@ drawMap = function () {
 
     let ctx = miniMap.getContext("2d");
 
-    // loop through all blocks on the map
     for (let y = 0; y < mapHeight; y++) {
         for (let x = 0; x < mapWidth; x++) {
 
@@ -90,8 +89,8 @@ cycle = function () {
 
 //----------------------------------------------------------
 
-// Open space - 0
-// Wall - 1
+// open space - 0
+// wall - 1 etc...
 
 var map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

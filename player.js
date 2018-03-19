@@ -1,10 +1,10 @@
 var player = {
     x: 15.5,
     y: 16.5,
-    direction: 0,		// -1 for left or 1 for right
+    direction: 0,		// right 1 left -1
     rotation: 0,		// the current angle of rotationation
-    horizontal: 0,
-    vertical: 0,		    // forward 1 backwards -1
+    vertical: 0,		// forward 1 backwards -1
+    horizontal: 0,      // right 1 left -1
     moveSpeed: 0.1,	    // step/update
     rotationvertical: 6	// rotationate each update (in degrees)
 }
@@ -19,7 +19,6 @@ update = function () {
     objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
 
     objectCtx.fillRect(
-        // draw a dot at the current player positionition
         player.x * mapScale - 2,
         player.y * mapScale - 2,
         4, 4
@@ -29,7 +28,7 @@ update = function () {
 //----------------------------------------------------------
 
 move = function () {
-    
+
     let moveStep;
     if (player.vertical)
         moveStep = player.vertical * player.moveSpeed;
@@ -50,7 +49,7 @@ move = function () {
     }
 
     let position = isCollision(player.x, player.y, newX, newY, 0.35);
-    player.x = position.x; // set new positionition
+    player.x = position.x;
     player.y = position.y;
 }
 
@@ -180,32 +179,20 @@ keys = function () {
     document.onkeydown = function (event) {
         event = event || window.event;
 
-        // which key was pressed?
         switch (event.keyCode) {
 
             case 38: // up
-                player.vertical = 1;
-                break;
-
+                player.vertical = 1; break;
             case 40: // down
-                player.vertical = -1;
-                break;
-
+                player.vertical = -1; break;
             case 65: // left
-                player.horizontal = -1;
-                break;
-
+                player.horizontal = -1; break;
             case 68: // right
-                player.horizontal = 1;
-                break;
-
+                player.horizontal = 1; break;
             case 37: // left
-                player.direction = -1;
-                break;
-
+                player.direction = -1; break;
             case 39: // right
-                player.direction = 1;
-                break;
+                player.direction = 1; break;
         }
     }
 
@@ -213,15 +200,11 @@ keys = function () {
         event = event || window.event;
 
         switch (event.keyCode) {
-            case 38:
-            case 40:
-            case 65:
-            case 68:
+            case 38: case 40: case 65: case 68:
                 player.vertical = 0;
                 player.horizontal = 0;
                 break;
-            case 37:
-            case 39:
+            case 37: case 39:
                 player.direction = 0;
                 break;
         }
