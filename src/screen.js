@@ -6,7 +6,7 @@ function initScreen() {
     screen.style.width = screenWidth + 'px';
 
     for (var i = 0; i < screenWidth; i += stripWidth) {
-        var strip = dc("div");
+        var strip = π("div");
         strip.style.position = "absolute";
         strip.style.left = i + "px";
         strip.style.width = stripWidth + "px";
