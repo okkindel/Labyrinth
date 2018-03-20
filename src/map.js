@@ -16,9 +16,6 @@ setTimeout(init, 1);
 var $ = function (id) {
     return document.getElementById(id);
 };
-var π = function (id) {
-    return document.createElement(id);
-};
 
 //----------------------------------------------------------
 
