@@ -4,9 +4,9 @@ var player = {
     direction: 0,		// right 1 left -1
     rotation: 0,		// the current angle of rotationation
     vertical: 0,		// forward 1 backwards -1
-    horizontal: 0,      // right 1 left -1
     moveSpeed: 0.1,	    // step/update
-    rotationSpeed: 6	// rotation each update (in degrees)
+    rotationSpeed: 6,	// rotation each update (in degrees)
+    horizontal: false   // right 1 left -1
 }
 
 //----------------------------------------------------------
@@ -29,18 +29,19 @@ update = function () {
 
 move = function () {
 
-    let moveStep;
-    if (player.vertical)
+    let moveStep
+    if (!player.horizontal) {
         moveStep = player.vertical * player.moveSpeed;
+        player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
+    }
     else
-        moveStep = player.horizontal * player.moveSpeed;
+        moveStep = player.direction * player.moveSpeed;
 
-    player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
     while (player.rotation < 0) player.rotation += Math.PI * 2;
     while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
 
     let newX, newY;
-    if (player.vertical) {
+    if (!player.horizontal) {
         newX = player.x + Math.cos(player.rotation) * moveStep;
         newY = player.y + Math.sin(player.rotation) * moveStep;
     } else {
@@ -185,10 +186,8 @@ addKeys = function () {
                 player.vertical = 1; break;
             case 40: // down
                 player.vertical = -1; break;
-            case 65: // left
-                player.horizontal = -1; break;
-            case 68: // right
-                player.horizontal = 1; break;
+            case 16: // horizontal
+                player.horizontal = true; break;
             case 37: // left
                 player.direction = -1; break;
             case 39: // right
@@ -200,9 +199,11 @@ addKeys = function () {
         event = event || window.event;
 
         switch (event.keyCode) {
-            case 38: case 40: case 65: case 68:
+            case 38: case 40:
                 player.vertical = 0;
-                player.horizontal = 0;
+                break;
+            case 16:
+                player.horizontal = false;
                 break;
             case 37: case 39:
                 player.direction = 0;
