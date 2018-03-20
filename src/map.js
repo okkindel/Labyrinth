@@ -84,6 +84,7 @@ cycle = function () {
     clearSprites();
     castRays();
     renderSprites();
+    updateBackground();
     setTimeout(cycle, 1000 / 30);
 }
 

@@ -42,6 +42,13 @@ var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 
 //----------------------------------------------------------
 
+updateBackground = function () {
+    let ceiling = $("ceiling");
+    ceiling.style.backgroundPosition = -200 * player.rotation + "px " + "100%";
+}
+
+//----------------------------------------------------------
+
 castRays = function () {
     let stripIdx = 0;
 
@@ -55,7 +62,7 @@ castRays = function () {
 
         castRay(
             // add the players viewing direction
-            player.rotation + rayAngle, 	
+            player.rotation + rayAngle,
             stripIdx++
         );
     }
@@ -95,9 +102,9 @@ castRay = function (rayAngle, stripIdx) {
     let dYVer = dXVer * slope; 	        // how much to move up or down
 
     // starting horizontal position, at one of the edges of the current map block
-    var x = right ? Math.ceil(player.x) : Math.floor(player.x);	
+    var x = right ? Math.ceil(player.x) : Math.floor(player.x);
     // starting vertical position, add the horizontal step we made * slope.
-    var y = player.y + (x - player.x) * slope;			
+    var y = player.y + (x - player.x) * slope;
 
     while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
         let wallX = Math.floor(x + (right ? 0 : -1));
@@ -112,7 +119,7 @@ castRay = function (rayAngle, stripIdx) {
             let distX = x - player.x;
             let distY = y - player.y;
             distance = distX * distX + distY * distY;
-            
+
             wallType = map[wallY][wallX];           // type of wall
             textureX = y % 1;	                    // where exactly on the wall
             if (!right) textureX = 1 - textureX;    // texture should be reversed on left side
@@ -188,7 +195,7 @@ castRay = function (rayAngle, stripIdx) {
         texX += (shadow ? width : 0);
 
         strip.img.style.left = -texX + "px";
-		strip.style.zIndex = Math.floor(height);
+        strip.style.zIndex = Math.floor(height);
 
         drawRay(xHit, yHit);
     }

@@ -2,6 +2,7 @@
     position: absolute;
     left: 20px;
     top: 20px;
+    right: 20px;
     border: 1px solid black;
     overflow: hidden;
 }
@@ -34,5 +35,6 @@
     position: absolute;
     width: 100%;
     height: 50%;
-    background: linear-gradient(to bottom, #69532f 0%, #a3772e 22%, #835019 62%, #5e3a11 100%);
+    background-image: url("assets/ceiling.jpg");
+    /* background: linear-gradient(to bottom, #69532f 0%, #a3772e 22%, #835019 62%, #5e3a11 100%); */
 }
