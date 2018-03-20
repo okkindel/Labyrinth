@@ -43,7 +43,9 @@ var viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 //----------------------------------------------------------
 
 updateBackground = function () {
+
     let ceiling = $("ceiling");
+    // it's kinda random value, depends on image width
     ceiling.style.backgroundPosition = -200 * player.rotation + "px " + "100%";
 }
 

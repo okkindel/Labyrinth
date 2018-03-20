@@ -5,6 +5,7 @@
     right: 20px;
     border: 1px solid black;
     overflow: hidden;
+    user-select: none;
 }
 
 #map {
