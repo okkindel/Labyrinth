@@ -21,6 +21,7 @@ https://okkindel.github.io/maze/
 * Fog on distance
 * Walkig :)
 * Static 2D sprites
+* Simple enemies with simle AI
 * Maze generator in Java
 
 ## Todo
