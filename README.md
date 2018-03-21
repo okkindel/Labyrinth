@@ -1,6 +1,6 @@
 # 3D Javascript Maze
 
-3D Labirynth written in Javascript. Maze generator was written earlier in Java. You controll camera by arrows, Shift for moving horizontaly. It uses canvas to draw minimap and raycasting system.
+3D Labyrinth written in Javascript. Maze generator was written earlier in Java. You controll camera by arrows, Shift for moving horizontaly. It uses canvas to draw minimap and raycasting system.
 
 Technique was used in Wolfenstain 3D. Some effects was added by my.
 
