@@ -1,14 +1,13 @@
 initSprites = function () {
 
     addItems();
-    spriteMap = [];
-    for (let y = 0; y < map.length; y++) {
-        spriteMap[y] = [];
+    for (let i = 0; i < map.length; i++) {
+        spritePosition[i] = [];
     }
 
     var screen = $('screen');
-    for (let i = 0; i < items.length; i++) {
-        let sprite = items[i];
+    for (let i = 0; i < mapSprites.length; i++) {
+        let sprite = mapSprites[i];
         let itemType = itemTypes[sprite.type];
         let img = document.createElement('img');
         img.src = itemType.img;
@@ -18,15 +17,15 @@ initSprites = function () {
         sprite.visible = false;
         sprite.block = itemType.block;
         sprite.img = img;
-        spriteMap[sprite.y][sprite.x] = sprite;
+        spritePosition[sprite.y][sprite.x] = sprite;
         screen.appendChild(img);
     }
 }
 
 //----------------------------------------------------------
 
-var items = [];
-var spriteMap = [];
+var mapSprites = [];
+var spritePosition = [];
 var visible = [];
 var nonVisible = [];
 var itemTypes = [
@@ -47,7 +46,7 @@ addItems = function () {
                         x: x,
                         y: y
                     }
-                    items.push(item)
+                    mapSprites.push(item)
                 }
         }
     }
@@ -107,3 +106,5 @@ renderSprites = function () {
         }
     }
 }
+
+//----------------------------------------------------------

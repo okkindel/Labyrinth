@@ -6,6 +6,7 @@ window.onload = function () {
     addKeys();
     initScreen();
     initSprites();
+    initEnemies();
     drawMap();
     cycle();
 }
@@ -59,7 +60,7 @@ drawMap = function () {
                 );
             }
 
-            if (spriteMap[y][x]) {
+            if (spritePosition[y][x]) {
                 ctx.fillStyle = "rgb(100,100,100)";
                 ctx.fillRect(
                     x * mapScale + mapScale * 0.25,
@@ -79,6 +80,8 @@ cycle = function () {
     clearSprites();
     castRays();
     renderSprites();
+    renderEnemies();
+    enemyAI();
     updateBackground();
     setTimeout(cycle, 1000 / 30);
 }

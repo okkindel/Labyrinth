@@ -111,9 +111,9 @@ castRay = function (rayAngle, stripIdx) {
         let wallX = Math.floor(x + (right ? 0 : -1));
         let wallY = Math.floor(y);
 
-        if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
-            spriteMap[wallY][wallX].visible = true;
-            visible.push(spriteMap[wallY][wallX]);
+        if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
+            spritePosition[wallY][wallX].visible = true;
+            visible.push(spritePosition[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {
@@ -146,9 +146,9 @@ castRay = function (rayAngle, stripIdx) {
         let wallY = Math.floor(y + (up ? -1 : 0));
         let wallX = Math.floor(x);
 
-        if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
-            spriteMap[wallY][wallX].visible = true;
-            visible.push(spriteMap[wallY][wallX]);
+        if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
+            spritePosition[wallY][wallX].visible = true;
+            visible.push(spritePosition[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {

@@ -18,11 +18,23 @@ update = function () {
     let objectCtx = objects.getContext("2d");
     objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
 
+    objectCtx.fillStyle = "black";
     objectCtx.fillRect(
         player.x * mapScale - 2,
         player.y * mapScale - 2,
         4, 4
     );
+
+    for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i];
+
+        objectCtx.fillStyle = "black";
+        objectCtx.fillRect(	
+            enemy.x * mapScale - 2,
+            enemy.y * mapScale - 2,
+            4, 4
+        );
+    }
 }
 
 //----------------------------------------------------------
@@ -49,14 +61,14 @@ move = function () {
         newY = player.y + Math.sin(player.rotation + 90 * Math.PI / 180) * moveStep;
     }
 
-    let position = isCollision(player.x, player.y, newX, newY, 0.35);
+    let position = checkCollision(player.x, player.y, newX, newY, 0.35);
     player.x = position.x;
     player.y = position.y;
 }
 
 //----------------------------------------------------------
 
-isCollision = function (fromX, fromY, toX, toY, radius) {
+checkCollision = function (fromX, fromY, toX, toY, radius) {
 
     let position = {
         x: fromX,
@@ -150,7 +162,7 @@ function isBlocking(x, y) {
         return true;
     if (map[Math.floor(y)][Math.floor(x)] != 0)
         return true;
-    if (spriteMap[Math.floor(y)][Math.floor(x)] && spriteMap[Math.floor(y)][Math.floor(x)].block)
+    if (spritePosition[Math.floor(y)][Math.floor(x)] && spritePosition[Math.floor(y)][Math.floor(x)].block)
         return true;
     return false;
 }
