@@ -18,6 +18,7 @@ https://okkindel.github.io/maze/
 * Textured walls
 * Textured cellig
 * Simple shading
+* Fog on distance
 * Walkig :)
 * Static 2D sprites
 
