@@ -1,4 +1,4 @@
-init = function () {
+window.onload = function () {
 
     mapWidth = map[0].length;
     mapHeight = map.length;
@@ -9,7 +9,6 @@ init = function () {
     drawMap();
     cycle();
 }
-setTimeout(init, 1);
 
 //----------------------------------------------------------
 

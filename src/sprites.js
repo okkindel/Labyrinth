@@ -92,6 +92,9 @@ renderSprites = function () {
 
         img.style.width = size + "px";
         img.style.height = size + "px";
+
+        // fog on sprite
+        img.style.filter = "brightness(" + (100 - 15 * distance) + "%)";
         img.style.zIndex = Math.floor(size);
     }
 

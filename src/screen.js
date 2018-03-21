@@ -18,15 +18,10 @@ function initScreen() {
         img.src = ("src/assets/walls.png");
         img.style.position = "absolute";
         img.style.left = "0px";
-        
+
         // assign image to property on strip element for easy access
         strip.appendChild(img);
         strip.img = img;
-
-        let fog = document.createElement("span");
-        fog.style.position = "absolute";
-        strip.appendChild(fog);
-        strip.fog = fog;
 
         screenStrips.push(strip);
         screen.appendChild(strip);
@@ -196,9 +191,8 @@ castRay = function (rayAngle, stripIdx) {
         strip.img.style.width = Math.floor(width * 2) + "px";
         strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
 
-        strip.fog.style.height = Math.floor(height * numoftex) + "px";
-        strip.fog.style.width = Math.floor(width * 2) + "px";
-        strip.fog.style.background = "rgba(0,0,0," + distance / 10 + ")";
+        //fog
+        strip.img.style.filter = "brightness(" + (100 - 10 * distance) + "%)";
 
         let texX = Math.round(textureX * width);
         if (texX > width - stripWidth)
