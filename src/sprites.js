@@ -2,18 +2,19 @@ initSprites = function () {
 
     addItems();
     spriteMap = [];
-    for (var y = 0; y < map.length; y++) {
+    for (let y = 0; y < map.length; y++) {
         spriteMap[y] = [];
     }
 
     var screen = $('screen');
-    for (var i = 0; i < items.length; i++) {
-        var sprite = items[i];
-        var itemType = itemTypes[sprite.type];
-        var img = document.createElement('img');
+    for (let i = 0; i < items.length; i++) {
+        let sprite = items[i];
+        let itemType = itemTypes[sprite.type];
+        let img = document.createElement('img');
         img.src = itemType.img;
-        img.style.display = 'none';
-        img.style.position = 'absolute';
+        img.style.display = "none";
+        img.style.position = "absolute";
+        img.style.overflow = "hidden";
         sprite.visible = false;
         sprite.block = itemType.block;
         sprite.img = img;

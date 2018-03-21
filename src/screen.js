@@ -6,23 +6,27 @@ function initScreen() {
     screen.style.width = screenWidth + 'px';
 
     for (var i = 0; i < screenWidth; i += stripWidth) {
-        var strip = document.createElement("div");
+        let strip = document.createElement("div");
         strip.style.position = "absolute";
         strip.style.left = i + "px";
         strip.style.width = stripWidth + "px";
         strip.style.height = "0px";
         strip.style.overflow = "hidden";
-
         strip.style.backgroundColor = "transparent";
 
-        var img = new Image();
+        let img = new Image();
         img.src = ("src/assets/walls.png");
         img.style.position = "absolute";
         img.style.left = "0px";
-
+        
         // assign image to property on strip element for easy access
         strip.appendChild(img);
         strip.img = img;
+
+        let fog = document.createElement("span");
+        fog.style.position = "absolute";
+        strip.appendChild(fog);
+        strip.fog = fog;
 
         screenStrips.push(strip);
         screen.appendChild(strip);
@@ -187,9 +191,14 @@ castRay = function (rayAngle, stripIdx) {
         let top = Math.round((screenHeight - height) / 2);
         strip.style.height = height + "px";
         strip.style.top = top + "px";
+
         strip.img.style.height = Math.floor(height * numoftex) + "px";
         strip.img.style.width = Math.floor(width * 2) + "px";
         strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
+
+        strip.fog.style.height = Math.floor(height * numoftex) + "px";
+        strip.fog.style.width = Math.floor(width * 2) + "px";
+        strip.fog.style.background = "rgba(0,0,0," + distance / 10 + ")";
 
         let texX = Math.round(textureX * width);
         if (texX > width - stripWidth)
