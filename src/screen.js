@@ -192,7 +192,7 @@ castRay = function (rayAngle, stripIdx) {
         strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
 
         //fog
-        strip.img.style.filter = "brightness(" + (100 - 10 * distance) + "%)";
+        strip.img.style.filter = "brightness(" + (100 - 12 * distance) + "%)";
 
         let texX = Math.round(textureX * width);
         if (texX > width - stripWidth)
