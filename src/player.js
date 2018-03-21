@@ -25,9 +25,9 @@ update = function () {
         4, 4
     );
 
+    // enemy drawing
     for (let i = 0; i < enemies.length; i++) {
         let enemy = enemies[i];
-
         objectCtx.fillStyle = "black";
         objectCtx.fillRect(	
             enemy.x * mapScale - 2,
