@@ -1,8 +1,11 @@
+body {
+    background: linear-gradient(to bottom, #69532f 0%, #a3772e 22%, #835019 62%, #5e3a11 100%); 
+}
+
 #screen {
     position: absolute;
-    left: 20px;
-    top: 20px;
-    right: 20px;
+    margin: auto;
+    left: 0; top: 0; bottom: 0; right: 0;
     border: 1px solid black;
     overflow: hidden;
     user-select: none;
@@ -10,20 +13,15 @@
 
 #map {
     background: rgba(255, 255, 255, 0.5);
-    position: absolute;
-    top: 30px;
-    left: 30px;
+    position: relative;
+    left: 10px;
+    top: 10px;
     /* i know, it's ugly */
-    z-index: 9999;
+    z-index: 99999;
 }
 
-#minimap {
-    position: absolute;
-}
-
-#objects {
-    position: absolute;
-}
+#minimap { position: absolute; }
+#objects { position: absolute; }
 
 #floor {
     position: absolute;
@@ -37,5 +35,4 @@
     width: 100%;
     height: 50%;
     background-image: url("assets/ceiling.jpg");
-    /* background: linear-gradient(to bottom, #69532f 0%, #a3772e 22%, #835019 62%, #5e3a11 100%); */
 }
