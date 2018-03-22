@@ -69,85 +69,52 @@ renderEnemies = function () {
         let dy = enemy.y - player.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 10) {
-            let img = enemy.img;
-            let angle = Math.atan2(dy, dx) - player.rotation;
-            let size = viewDist / (Math.cos(angle) * distance);
-            let x = Math.tan(angle) * viewDist;
-            let style = img.style;
-            let oldStyles = enemy.oldStyles;
+        if (distance < 8) {
 
-            if (size != oldStyles.height) {
+            let angle = Math.atan2(dy, dx) - player.rotation;
+            if ((angle > -Math.PI * 180 / fov) && (angle < Math.PI * 180 / fov)) {
+
+                let img = enemy.img;
+                let size = viewDist / (Math.cos(angle) * distance);
+                let x = Math.tan(angle) * viewDist;
+                let style = img.style;
+                let oldStyles = enemy.oldStyles;
+
                 style.height = size + 'px';
-                oldStyles.height = size;
+                // times the total number of states
+                style.width = (size * enemy.numOfStates) + 'px';
+                style.top = ((screenHeight - size) / 2) + 'px';
+                style.left = (screenWidth / 2 + x - size / 2 - size * enemy.state) + 'px';
+                style.filter = ("brightness(" + (100 - 15 * distance) + "%)");
+                style.zIndex = Math.floor(size);
+                style.display = 'block';
+                style.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
             }
-            // times the total number of states
-            let styleWidth = size * enemy.numOfStates;
-            if (styleWidth != oldStyles.width) {
-                style.width = styleWidth + 'px';
-                oldStyles.width = styleWidth;
-            }
-            let styleTop = ((screenHeight - size) / 2);
-            if (styleTop != oldStyles.top) {
-                style.top = styleTop + 'px';
-                oldStyles.top = styleTop;
-            }
-            let styleLeft = (screenWidth / 2 + x - size / 2 - size * enemy.state);
-            if (styleLeft != oldStyles.left) {
-                style.left = styleLeft + 'px';
-                oldStyles.left = styleLeft;
-            }
-            let styleBright = "brightness(" + (100 - 15 * distance) + "%)"; 'block';
-            if (styleBright != oldStyles.filter) {
-                style.filter = styleBright;
-                oldStyles.filter = styleBright;
-            }
-            let styleZIndex = Math.floor(size);
-            if (styleZIndex != oldStyles.zIndex) {
-                style.zIndex = styleZIndex;
-                oldStyles.zIndex = styleZIndex;
-            }
-            let styleDisplay = 'block';
-            if (styleDisplay != oldStyles.display) {
-                style.display = styleDisplay;
-                oldStyles.display = styleDisplay;
-            }
-            let styleClip = 'rect(0, ' +
-                (size * (enemy.state + 1)) + ', ' +
-                size + ', ' +
-                (size * (enemy.state)) + ')';
-            if (styleClip != oldStyles.clip) {
-                style.clip = styleClip;
-                oldStyles.clip = styleClip;
-            }
+            enemyAI(enemy);
         }
     }
-    enemyAI();
 }
 
 //----------------------------------------------------------
 
-enemyAI = function () {
+enemyAI = function (enemy) {
 
-    for (let i = 0; i < enemies.length; i++) {
-        let enemy = enemies[i];
-        let dx = player.x - enemy.x;
-        let dy = player.y - enemy.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        if ((distance > 2) && (distance < 8)) {
-            let angle = Math.atan2(dy, dx);
-            enemy.rotDeg = angle * 180 / Math.PI;
-            enemy.rot = angle;
-            enemy.speed = 1;
-            let walkCycleTime = 1000;
-            let numWalkSprites = 7;
-            enemy.state = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
-        } else {
-            enemy.state = 0;
-            enemy.speed = 0;
-        }
-        enemyMove(enemies[i]);
+    let dx = player.x - enemy.x;
+    let dy = player.y - enemy.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    if ((distance > 2) && (distance < 8)) {
+        let angle = Math.atan2(dy, dx);
+        enemy.rotDeg = angle * 180 / Math.PI;
+        enemy.rot = angle;
+        enemy.speed = 1;
+        let walkCycleTime = 1000;
+        let numWalkSprites = 7;
+        enemy.state = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
+    } else {
+        enemy.state = 0;
+        enemy.speed = 0;
     }
+    enemyMove(enemy);
 }
 
 //----------------------------------------------------------

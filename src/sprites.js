@@ -68,25 +68,23 @@ renderSprites = function () {
 
         let sprite = sprites[i];
         if (sprite.visible) {
+
             let img = sprite.img;
             img.style.display = "block";
 
             // translate position to viewer space
             let dx = sprite.x + 0.5 - player.x;
             let dy = sprite.y + 0.5 - player.y;
-
             let distance = Math.sqrt(dx * dx + dy * dy);
-            let spriteAngle = Math.atan2(dy, dx) - player.rotation;
-            let size = viewDist / (Math.cos(spriteAngle) * distance);
-
+            let angle = Math.atan2(dy, dx) - player.rotation;
+            let size = viewDist / (Math.cos(angle) * distance);
             if (size <= 0) continue;
 
             // x-position on screen
-            let x = Math.tan(spriteAngle) * viewDist;
+            let x = Math.tan(angle) * viewDist;
             img.style.left = (screenWidth / 2 + x - size / 2) + "px";
             // y is constant
             img.style.top = ((screenHeight - size) / 2) + "px";
-
             img.style.width = size + "px";
             img.style.height = size + "px";
 
