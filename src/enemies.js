@@ -17,7 +17,7 @@ initEnemies = function () {
         enemy.moveSpeed = type.moveSpeed;
         enemy.rotSpeed = type.rotSpeed;
         enemy.numOfStates = type.numOfStates;
-        enemy.oldStyles = {
+        enemy.prevStyle = {
             left: 0,
             top: 0,
             width: 0,
@@ -68,27 +68,51 @@ renderEnemies = function () {
         let dx = enemy.x - player.x;
         let dy = enemy.y - player.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 8) {
-
+        
+        if (distance < 10) {
+            
             let angle = Math.atan2(dy, dx) - player.rotation;
             if ((angle > -Math.PI * 180 / fov) && (angle < Math.PI * 180 / fov)) {
 
                 let img = enemy.img;
                 let size = viewDist / (Math.cos(angle) * distance);
                 let x = Math.tan(angle) * viewDist;
-                let style = img.style;
-                let oldStyles = enemy.oldStyles;
+                let prevStyle = enemy.prevStyle;
 
-                style.height = size + 'px';
+                if (size != prevStyle.height) {
+                    img.style.height = size + 'px';
+                    prevStyle.height = size;
+                }
                 // times the total number of states
-                style.width = (size * enemy.numOfStates) + 'px';
-                style.top = ((screenHeight - size) / 2) + 'px';
-                style.left = (screenWidth / 2 + x - size / 2 - size * enemy.state) + 'px';
-                style.filter = ("brightness(" + (100 - 15 * distance) + "%)");
-                style.zIndex = Math.floor(size);
-                style.display = 'block';
-                style.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
+                if ((size * enemy.numOfStates) != prevStyle.width) {
+                    img.style.width = (size * enemy.numOfStates) + 'px';
+                    prevStyle.width = (size * enemy.numOfStates);
+                }
+                if (((screenHeight - size) / 2) != prevStyle.top) {
+                    img.style.top = ((screenHeight - size) / 2) + 'px';
+                    prevStyle.top = ((screenHeight - size) / 2);
+                }
+                if ((screenWidth / 2 + x - size / 2 - size * enemy.state) != prevStyle.left) {
+                    img.style.left = (screenWidth / 2 + x - size / 2 - size * enemy.state) + 'px';
+                    prevStyle.left = (screenWidth / 2 + x - size / 2 - size * enemy.state);
+                }
+                if (("brightness(" + (100 - 15 * distance) + "%)") != prevStyle.filter) {
+                    img.style.filter = ("brightness(" + (100 - 15 * distance) + "%)");
+                    prevStyle.filter = ("brightness(" + (100 - 15 * distance) + "%)");
+                }
+                if (Math.floor(size) != prevStyle.zIndex) {
+                    img.style.zIndex = Math.floor(size);
+                    prevStyle.zIndex = Math.floor(size);
+                }
+                if ('block' != prevStyle.display) {
+                    img.style.display = 'block';
+                    prevStyle.display = 'block';
+                }
+
+                if (('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')') != prevStyle.clip) {
+                    img.style.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
+                    prevStyle.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
+                }
             }
             enemyAI(enemy);
         }
