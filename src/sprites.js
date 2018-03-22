@@ -78,7 +78,6 @@ renderSprites = function () {
             let distance = Math.sqrt(dx * dx + dy * dy);
             let angle = Math.atan2(dy, dx) - player.rotation;
             let size = viewDist / (Math.cos(angle) * distance);
-            if (size <= 0) continue;
 
             // x-position on screen
             let x = Math.tan(angle) * viewDist;
