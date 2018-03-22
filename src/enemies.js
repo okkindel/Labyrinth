@@ -70,10 +70,9 @@ renderEnemies = function () {
         let distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 10) {
-            console.log("1")
+
             let angle = Math.atan2(dy, dx) - player.rotation;
             if ((angle > -fov) && (angle < fov)) {
-                console.log("2")
 
                 let img = enemy.img;
                 let size = viewDist / (Math.cos(angle) * distance);
