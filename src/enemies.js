@@ -51,20 +51,13 @@ var enemyTypes = [
 //----------------------------------------------------------
 
 addEnemies = function () {
-    while (true) {
-        x = Math.floor(Math.random() * mapWidth)
-        y = Math.floor(Math.random() * mapHeight)
 
-        if (map[x][y] == 0) {
-            let enemy = {
-                type: 0,
-                x: x + 0.5,
-                y: y + 0.5
-            }
-            mapEnemies.push(enemy);
-            break;
-        }
+    let enemy = {
+        type: 0,
+        x: 8.5,
+        y: 27.5
     }
+    mapEnemies.push(enemy);
 }
 
 //----------------------------------------------------------
@@ -72,60 +65,64 @@ addEnemies = function () {
 renderEnemies = function () {
     for (let i = 0; i < enemies.length; i++) {
         let enemy = enemies[i];
-        let img = enemy.img;
         let dx = enemy.x - player.x;
         let dy = enemy.y - player.y;
-        let angle = Math.atan2(dy, dx) - player.rotation;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        let size = viewDist / (Math.cos(angle) * distance);
-        let x = Math.tan(angle) * viewDist;
-        let style = img.style;
-        let oldStyles = enemy.oldStyles;
 
-        if (size != oldStyles.height) {
-            style.height = size + 'px';
-            oldStyles.height = size;
-        }
-        // times the total number of states
-        let styleWidth = size * enemy.numOfStates;
-        if (styleWidth != oldStyles.width) {
-            style.width = styleWidth + 'px';
-            oldStyles.width = styleWidth;
-        }
-        let styleTop = ((screenHeight - size) / 2);
-        if (styleTop != oldStyles.top) {
-            style.top = styleTop + 'px';
-            oldStyles.top = styleTop;
-        }
-        let styleLeft = (screenWidth / 2 + x - size / 2 - size * enemy.state);
-        if (styleLeft != oldStyles.left) {
-            style.left = styleLeft + 'px';
-            oldStyles.left = styleLeft;
-        }
-        let styleBright = "brightness(" + (100 - 15 * distance) + "%)"; 'block';
-        if (styleBright != oldStyles.filter) {
-            style.filter = styleBright;
-            oldStyles.filter = styleBright;
-        }
-        let styleZIndex = Math.floor(size);
-        if (styleZIndex != oldStyles.zIndex) {
-            style.zIndex = styleZIndex;
-            oldStyles.zIndex = styleZIndex;
-        }
-        let styleDisplay = 'block';
-        if (styleDisplay != oldStyles.display) {
-            style.display = styleDisplay;
-            oldStyles.display = styleDisplay;
-        }
-        let styleClip = 'rect(0, ' +
-            (size * (enemy.state + 1)) + ', ' +
-            size + ', ' +
-            (size * (enemy.state)) + ')';
-        if (styleClip != oldStyles.clip) {
-            style.clip = styleClip;
-            oldStyles.clip = styleClip;
+        if (distance < 10) {
+            let img = enemy.img;
+            let angle = Math.atan2(dy, dx) - player.rotation;
+            let size = viewDist / (Math.cos(angle) * distance);
+            let x = Math.tan(angle) * viewDist;
+            let style = img.style;
+            let oldStyles = enemy.oldStyles;
+
+            if (size != oldStyles.height) {
+                style.height = size + 'px';
+                oldStyles.height = size;
+            }
+            // times the total number of states
+            let styleWidth = size * enemy.numOfStates;
+            if (styleWidth != oldStyles.width) {
+                style.width = styleWidth + 'px';
+                oldStyles.width = styleWidth;
+            }
+            let styleTop = ((screenHeight - size) / 2);
+            if (styleTop != oldStyles.top) {
+                style.top = styleTop + 'px';
+                oldStyles.top = styleTop;
+            }
+            let styleLeft = (screenWidth / 2 + x - size / 2 - size * enemy.state);
+            if (styleLeft != oldStyles.left) {
+                style.left = styleLeft + 'px';
+                oldStyles.left = styleLeft;
+            }
+            let styleBright = "brightness(" + (100 - 15 * distance) + "%)"; 'block';
+            if (styleBright != oldStyles.filter) {
+                style.filter = styleBright;
+                oldStyles.filter = styleBright;
+            }
+            let styleZIndex = Math.floor(size);
+            if (styleZIndex != oldStyles.zIndex) {
+                style.zIndex = styleZIndex;
+                oldStyles.zIndex = styleZIndex;
+            }
+            let styleDisplay = 'block';
+            if (styleDisplay != oldStyles.display) {
+                style.display = styleDisplay;
+                oldStyles.display = styleDisplay;
+            }
+            let styleClip = 'rect(0, ' +
+                (size * (enemy.state + 1)) + ', ' +
+                size + ', ' +
+                (size * (enemy.state)) + ')';
+            if (styleClip != oldStyles.clip) {
+                style.clip = styleClip;
+                oldStyles.clip = styleClip;
+            }
         }
     }
+    enemyAI();
 }
 
 //----------------------------------------------------------

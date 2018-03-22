@@ -51,7 +51,7 @@ drawMap = function () {
 
             if (wall > 0) {
 
-                ctx.fillStyle = "rgb(0,0,0)";
+                ctx.fillStyle = "black";
                 ctx.fillRect(
                     x * mapScale,
                     y * mapScale,
@@ -81,7 +81,6 @@ cycle = function () {
     castRays();
     renderSprites();
     renderEnemies();
-    enemyAI();
     updateBackground();
     setTimeout(cycle, 1000 / 30);
 }
