@@ -113,7 +113,6 @@ castRay = function (rayAngle, stripIdx) {
 
         if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
             spritePosition[wallY][wallX].visible = true;
-            visible.push(spritePosition[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {
@@ -148,7 +147,6 @@ castRay = function (rayAngle, stripIdx) {
 
         if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
             spritePosition[wallY][wallX].visible = true;
-            visible.push(spritePosition[wallY][wallX]);
         }
 
         if (map[wallY][wallX] > 0) {
