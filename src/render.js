@@ -1,11 +1,11 @@
 function initScreen() {
 
-    var screen = $("screen");
+    let screen = $("screen");
 
     screen.style.height = screenHeight + 'px';
     screen.style.width = screenWidth + 'px';
 
-    for (var i = 0; i < screenWidth; i += stripWidth) {
+    for (let i = 0; i < screenWidth; i += stripWidth) {
         let strip = document.createElement("div");
         strip.style.position = "absolute";
         strip.style.left = i + "px";
@@ -15,6 +15,12 @@ function initScreen() {
         let img = new Image();
         img.src = ("src/assets/walls.png");
         img.style.position = "absolute";
+        img.prevStyle = {
+            height: 0,
+            width: 0,
+            top: 0,
+            left: 0
+        }
         strip.appendChild(img);
         strip.img = img;
 
@@ -183,18 +189,32 @@ castRay = function (rayAngle, stripIdx) {
         // way down the screen and then half the wall height back up.
         let top = Math.round((screenHeight - height) / 2);
         let texX = Math.round(textureX * width);
-       
-        strip.style.height = height + "px";
-        strip.style.top = top + "px";
+        let prevStyle = strip.img.prevStyle;
+
         if (texX > width - stripWidth)
             texX = width - stripWidth;
         texX += (shadow ? width : 0);
 
-        strip.img.style.left = -texX + "px";
-        strip.img.style.height = (height * numoftex) >> 0 + "px";
-        strip.img.style.width = (width * 2) >> 0 + "px";
-        strip.img.style.top = -(height * (wallType - 1)) >> 0 + "px";
+        strip.style.height = height + "px";
+        strip.style.top = top + "px";
         strip.style.zIndex = height >> 0;
+
+        if (prevStyle.height != (height * numoftex) >> 0) {
+            strip.img.style.height = (height * numoftex) >> 0 + "px";
+            prevStyle.height = (height * numoftex) >> 0;
+        }
+        if (prevStyle.width != (width * 2) >> 0) {
+            strip.img.style.width = (width * 2) >> 0 + "px";
+            prevStyle.width = (width * 2) >> 0;
+        }
+        if (prevStyle.top != -(height * (wallType - 1)) >> 0) {
+            strip.img.style.top = -(height * (wallType - 1)) >> 0 + "px";
+            prevStyle.top = -(height * (wallType - 1)) >> 0;
+        }
+        if (prevStyle.left != -texX) {
+            strip.img.style.left = -texX + "px";
+            prevStyle.left = -texX;
+        }
         strip.fog.style.height = height >> 0 + "px";
         strip.fog.style.width = (width * 2) >> 0 + "px";
         strip.fog.style.background = "rgba(0,0,0," + distance / 10 + ")";
