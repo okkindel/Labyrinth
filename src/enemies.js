@@ -68,11 +68,13 @@ renderEnemies = function () {
         let dx = enemy.x - player.x;
         let dy = enemy.y - player.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance < 10) {
 
             let angle = Math.atan2(dy, dx) - player.rotation;
-            //if ((angle > -Math.PI) && (angle < Math.PI)) {
+            if (angle < -Math.PI) angle += Math.PI * 2;
+            if (angle >= Math.PI) angle -= Math.PI * 2;
+            if ((angle > -Math.PI) && (angle < Math.PI)) {
 
                 let img = enemy.img;
                 let size = viewDist / (Math.cos(angle) * distance);
@@ -112,7 +114,7 @@ renderEnemies = function () {
                     img.style.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
                     prevStyle.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
                 }
-            //}
+            }
             enemyAI(enemy);
         }
     }
