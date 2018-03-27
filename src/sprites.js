@@ -5,7 +5,7 @@ initSprites = function () {
         spritePosition[i] = [];
     }
 
-    var screen = $('screen');
+    let screen = $('screen');
     for (let i = 0; i < mapSprites.length; i++) {
         let sprite = mapSprites[i];
         let itemType = itemTypes[sprite.type];
@@ -89,7 +89,7 @@ renderSprites = function () {
 
             // fog on sprite
             img.style.filter = "brightness(" + (100 - 15 * distance) + "%)";
-            img.style.zIndex = Math.floor(size);
+            img.style.zIndex = (size) >> 0;
         } else {
             sprite.img.style.display = "none";
         }

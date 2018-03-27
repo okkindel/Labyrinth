@@ -1,27 +1,27 @@
 function initScreen() {
 
-    var screen = $("screen");
+    let screen = $("screen");
 
     screen.style.height = screenHeight + 'px';
     screen.style.width = screenWidth + 'px';
 
-    for (var i = 0; i < screenWidth; i += stripWidth) {
-        let strip = document.createElement("div");
+    for (let i = 0; i < screenWidth; i += stripWidth) {
+        let strip = document.createElement("img");
         strip.style.position = "absolute";
-        strip.style.left = i + "px";
-        strip.style.width = stripWidth + "px";
         strip.style.height = "0px";
-        strip.style.overflow = "hidden";
-        strip.style.backgroundColor = "transparent";
+        strip.style.left = strip.style.top = "0px";
 
-        let img = new Image();
-        img.src = ("src/assets/walls.png");
-        img.style.position = "absolute";
-        img.style.left = "0px";
+        strip.src = "src/assets/walls.png";
 
-        // assign image to property on strip element for easy access
-        strip.appendChild(img);
-        strip.img = img;
+        strip.prevStyle = {
+            height: 0,
+            width: 0,
+            top: 0,
+            left: 0,
+            clip: '',
+            zIndex: 0,
+            filter: null
+        };
 
         screenStrips.push(strip);
         screen.appendChild(strip);
@@ -85,12 +85,12 @@ castRay = function (rayAngle, stripIdx) {
     let angleCos = Math.cos(rayAngle);
 
     let distance = 0;	// the distance to the block we hit
-    let xHit = 0; 	// the x and y coord of where the ray hit the block
-    let yHit = 0;
+    let xHit = 0;   	// the x coord of where the ray hit the block
+    let yHit = 0;       // the y coord of where the ray hit the block
 
     let textureX;	// the x-coord on the texture
-    let wallX;	    // the (x,y) map coords of the block
-    let wallY;
+    let wallX;	    // the x map coord of the block
+    let wallY;      // the y map coord of the block
 
     let shadow; // vertical walls shadowed
 
@@ -98,18 +98,18 @@ castRay = function (rayAngle, stripIdx) {
     // we're standing in then moving in 1 map unit steps horizontally
     // move vertically is determined by the slope of the ray
 
-    var slope = angleSin / angleCos; 	// the slope made by the ray
+    let slope = angleSin / angleCos; 	// the slope made by the ray
     let dXVer = right ? 1 : -1; 	    // we move to the left or right
     let dYVer = dXVer * slope; 	        // how much to move up or down
 
     // starting horizontal position, at one of the edges of the current map block
-    var x = right ? Math.ceil(player.x) : Math.floor(player.x);
+    let x = right ? Math.ceil(player.x) : (player.x) >> 0;
     // starting vertical position, add the horizontal step we made * slope.
-    var y = player.y + (x - player.x) * slope;
+    let y = player.y + (x - player.x) * slope;
 
     while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
-        let wallX = Math.floor(x + (right ? 0 : -1));
-        let wallY = Math.floor(y);
+        wallX = (x + (right ? 0 : -1)) >> 0;
+        wallY = (y) >> 0;
 
         if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
             spritePosition[wallY][wallX].visible = true;
@@ -135,15 +135,15 @@ castRay = function (rayAngle, stripIdx) {
 
     // once we hit a map block, we check if there is found one in the vertical turn. 
     // we'll know that if distance !=0 -> we only register this hit if this distance is smaller.
-    var slope = angleCos / angleSin;
+    slope = angleCos / angleSin;
     let dYHor = up ? -1 : 1;
     let dXHor = dYHor * slope;
-    var y = up ? Math.floor(player.y) : Math.ceil(player.y);
-    var x = player.x + (y - player.y) * slope;
+    y = up ? (player.y) >> 0 : Math.ceil(player.y);
+    x = player.x + (y - player.y) * slope;
 
     while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
-        let wallY = Math.floor(y + (up ? -1 : 0));
-        let wallX = Math.floor(x);
+        wallY = (y + (up ? -1 : 0)) >> 0;
+        wallX = (x) >> 0;
 
         if (spritePosition[wallY][wallX] && !spritePosition[wallY][wallX].visible) {
             spritePosition[wallY][wallX].visible = true;
@@ -170,38 +170,53 @@ castRay = function (rayAngle, stripIdx) {
     }
 
     if (distance) {
+
         let strip = screenStrips[stripIdx];
         distance = Math.sqrt(distance);
-        // fish eye
-        // distorted_dist = correct_dist / cos(relative_angle_of_ray)
+        // fish eye correction: distorted_dist = correct_dist / cos(relative_angle_of_ray)
         distance = distance * Math.cos(player.rotation - rayAngle);
         // calc position, height and width of the wall strip
         let height = Math.round(viewDist / distance);
         // stretch the texture to a factor to make it fill the strip correctly
         let width = height * stripWidth;
-        // since everything is centered on the x-axis, move it half 
-        // way down the screen and then half the wall height back up.
-        let top = Math.round((screenHeight - height) / 2);
-        strip.style.height = height + "px";
-        strip.style.top = top + "px";
+        let top = (height * (wallType - 1)) >> 0;
+        let lenght = Math.round(textureX * width);
+        if (lenght > width - stripWidth)
+            lenght = width - stripWidth;
+        lenght += (shadow ? width : 0);
+        let prevStyle = strip.prevStyle;
 
-        strip.img.style.height = Math.floor(height * numoftex) + "px";
-        strip.img.style.width = Math.floor(width * 2) + "px";
-        strip.img.style.top = -Math.floor(height * (wallType - 1)) + "px";
-
-        // fog
-        strip.img.style.filter = "brightness(" + (100 - 12 * distance) + "%)";
-
-        let texX = Math.round(textureX * width);
-        if (texX > width - stripWidth)
-            texX = width - stripWidth;
-        texX += (shadow ? width : 0);
-
-        strip.img.style.left = -texX + "px";
-        strip.style.zIndex = Math.floor(height);
-
-        drawRay(xHit, yHit);
+        if (prevStyle.height != (height * numoftex) >> 0) {
+            strip.style.height = (height * numoftex) >> 0 + "px";
+            prevStyle.height = (height * numoftex) >> 0
+        }
+        if (prevStyle.width != (width * 2) >> 0) {
+            strip.style.width = (width * 2) >> 0 + "px";
+            prevStyle.width = (width * 2) >> 0;
+        }
+        if (prevStyle.top != Math.round((screenHeight - height) / 2) - top) {
+            strip.style.top = Math.round((screenHeight - height) / 2) - top + "px";
+            prevStyle.top = Math.round((screenHeight - height) / 2) - top;
+        }
+        if (prevStyle.left != stripIdx * stripWidth - lenght) {
+            strip.style.left = stripIdx * stripWidth - lenght + "px";
+            prevStyle.left = stripIdx * stripWidth - lenght;
+        }
+        if (prevStyle.clip != "rect(" + top + ", " + (lenght + stripWidth) + ", " + (top + height) + ", " + lenght + ")") {
+            strip.style.clip = "rect(" + top + ", " + (lenght + stripWidth) + ", " + (top + height) + ", " + lenght + ")";
+            prevStyle.clip = "rect(" + top + ", " + (lenght + stripWidth) + ", " + (top + height) + ", " + lenght + ")";
+        }
+        if (prevStyle.zIndex != (height) >> 0) {
+            strip.style.zIndex = (height) >> 0;
+            prevStyle.zIndex = (height) >> 0;
+        }
+        if (prevStyle.filter != "brightness(" + (100 - 12 * distance) + "%)") {
+            strip.style.filter = "brightness(" + (100 - 12 * distance) + "%)";
+            prevStyle.filter = "brightness(" + (100 - 12 * distance) + "%)";
+        }
     }
+
+    drawRay(xHit, yHit);
 }
 
 //----------------------------------------------------------

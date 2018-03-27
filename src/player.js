@@ -4,50 +4,23 @@ var player = {
     direction: 0,		// right 1 left -1
     rotation: 0,		// the current angle of rotationation
     vertical: 0,		// forward 1 backwards -1
-    moveSpeed: 0.1,	    // step/update
-    rotationSpeed: 6,	// rotation each update (in degrees)
+    moveSpeed: 0.075,	    // step/update
+    rotationSpeed: 5,	// rotation each update (in degrees)
     horizontal: false   // right 1 left -1
 }
 
 //----------------------------------------------------------
 
-update = function () {
-    let miniMap = $("minimap");
-    let objects = $("objects");
+move = function (timeDelta) {
 
-    let objectCtx = objects.getContext("2d");
-    objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
-
-    objectCtx.fillStyle = "black";
-    objectCtx.fillRect(
-        player.x * mapScale - 2,
-        player.y * mapScale - 2,
-        4, 4
-    );
-
-    // enemy drawing
-    for (let i = 0; i < enemies.length; i++) {
-        let enemy = enemies[i];
-        objectCtx.fillStyle = "black";
-        objectCtx.fillRect(	
-            enemy.x * mapScale - 2,
-            enemy.y * mapScale - 2,
-            4, 4
-        );
-    }
-}
-
-//----------------------------------------------------------
-
-move = function () {
-
+    let move_abs = timeDelta / gameCycleDelay;
     let moveStep
     if (!player.horizontal) {
-        moveStep = player.vertical * player.moveSpeed;
-        player.rotation += player.direction * player.rotationSpeed * Math.PI / 180;
+        moveStep = move_abs * player.vertical * player.moveSpeed;
+        player.rotation += move_abs * player.direction * player.rotationSpeed * Math.PI / 180;
     }
     else
-        moveStep = player.direction * player.moveSpeed;
+        moveStep = move_abs * player.direction * player.moveSpeed;
 
     while (player.rotation < 0) player.rotation += Math.PI * 2;
     while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
@@ -78,8 +51,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth)
         return position;
 
-    let blockX = Math.floor(toX);
-    let blockY = Math.floor(toY);
+    let blockX = toX >> 0;
+    let blockY = toY >> 0;
 
     if (isBlocking(blockX, blockY)) {
         return position;
@@ -108,8 +81,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
 
     // is tile to the top-left a wall
     if (isBlocking(blockX - 1, blockY - 1) != 0 && !(top != 0 && left != 0)) {
-        var dx = toX - blockX;
-        var dy = toY - blockY;
+        let dx = toX - blockX;
+        let dy = toY - blockY;
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + radius;
@@ -119,8 +92,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the top-right a wall
     if (isBlocking(blockX + 1, blockY - 1) != 0 && !(top != 0 && right != 0)) {
-        var dx = toX - (blockX + 1);
-        var dy = toY - blockY;
+        let dx = toX - (blockX + 1);
+        let dy = toY - blockY;
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + 1 - radius;
@@ -130,8 +103,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the bottom-left a wall
     if (isBlocking(blockX - 1, blockY + 1) != 0 && !(bottom != 0 && bottom != 0)) {
-        var dx = toX - blockX;
-        var dy = toY - (blockY + 1);
+        let dx = toX - blockX;
+        let dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + radius;
@@ -141,8 +114,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the bottom-right a wall
     if (isBlocking(blockX + 1, blockY + 1) != 0 && !(bottom != 0 && right != 0)) {
-        var dx = toX - (blockX + 1);
-        var dy = toY - (blockY + 1);
+        let dx = toX - (blockX + 1);
+        let dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + 1 - radius;
@@ -160,9 +133,9 @@ function isBlocking(x, y) {
 
     if (y < 0 || y >= mapHeight || x < 0 || x >= mapWidth)
         return true;
-    if (map[Math.floor(y)][Math.floor(x)] != 0)
+    if (map[y >> 0][x >> 0] != 0)
         return true;
-    if (spritePosition[Math.floor(y)][Math.floor(x)] && spritePosition[Math.floor(y)][Math.floor(x)].block)
+    if (spritePosition[y >> 0][(x) >> 0] && spritePosition[y >> 0][x >> 0].block)
         return true;
     return false;
 }

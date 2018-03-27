@@ -1,7 +1,7 @@
 initEnemies = function () {
 
     addEnemies();
-    var screen = $('screen');
+    let screen = $('screen');
     for (let i = 0; i < mapEnemies.length; i++) {
         let enemy = mapEnemies[i];
         let type = enemyTypes[enemy.type];
@@ -72,7 +72,7 @@ renderEnemies = function () {
         if (distance < 10) {
 
             let angle = Math.atan2(dy, dx) - player.rotation;
-            if ((angle > -Math.PI / 2) && (angle < Math.PI / 2)) {
+            //if ((angle > -Math.PI) && (angle < Math.PI)) {
 
                 let img = enemy.img;
                 let size = viewDist / (Math.cos(angle) * distance);
@@ -100,20 +100,19 @@ renderEnemies = function () {
                     img.style.filter = ("brightness(" + (100 - 15 * distance) + "%)");
                     prevStyle.filter = ("brightness(" + (100 - 15 * distance) + "%)");
                 }
-                if (Math.floor(size) != prevStyle.zIndex) {
-                    img.style.zIndex = Math.floor(size);
-                    prevStyle.zIndex = Math.floor(size);
+                if (size >> 0 != prevStyle.zIndex) {
+                    img.style.zIndex = size >> 0;
+                    prevStyle.zIndex = size >> 0;
                 }
                 if ('block' != prevStyle.display) {
                     img.style.display = 'block';
                     prevStyle.display = 'block';
                 }
-
                 if (('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')') != prevStyle.clip) {
                     img.style.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
                     prevStyle.clip = ('rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')');
                 }
-            }
+            //}
             enemyAI(enemy);
         }
     }
