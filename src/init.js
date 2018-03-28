@@ -52,7 +52,7 @@ renderCycle = function () {
     renderEnemies();
     updateBackground();
 
-    setTimeout(renderCycle, 1000 / 30);
+    setTimeout(renderCycle, gameCycleDelay);
 }
 
 //----------------------------------------------------------
