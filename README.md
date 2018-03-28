@@ -27,7 +27,7 @@ https://okkindel.github.io/maze/
 ## Todo
 
 * ~~Shadows~~
-* ~~CODE OPTYMIZE~~
+* ~~Code Optymize~~
 * **Maybe level creator?**
 * Prescribe maze generator to JavaScript
 * All ideas are very welcome
