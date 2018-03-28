@@ -6,7 +6,9 @@ Technique was used in Wolfenstain 3D. Some effects was added by me.
 
 ## Game appearance
 
-<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/src/assets/screen.png?raw=true"></p>
+<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/src/assets/screens/screen.png?raw=true"></p>
+
+<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/src/assets/screens/screen2.png?raw=true"></p>
 
 ## Live example
 
@@ -22,12 +24,14 @@ https://okkindel.github.io/maze/
 * Walkig :)
 * Static 2D sprites
 * Simple enemies with simle AI
-* Maze generator in Java
+* Random maze generator in Java
+* Level Creator in Python
 
 ## Todo
 
 * ~~Shadows~~
 * ~~Code Optymize~~
-* **Maybe level creator?**
+* ~~Maybe level creator?~~
 * Prescribe maze generator to JavaScript
+* Prescribe level creator to JavaScript
 * All ideas are very welcome
