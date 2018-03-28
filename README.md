@@ -1,6 +1,6 @@
 # 3D Javascript Maze
 
-3D Labyrinth written in Javascript. Maze generator was written earlier in Java. You controll camera by arrows, Shift for moving horizontaly. It uses canvas to draw minimap and raycasting system.
+3D Labyrinth written in Javascript. Maze generator was written [earlier](https://github.com/okkindel/MazeGenerator) in Java. You controll camera by arrows, Shift for moving horizontaly. It uses canvas to draw minimap and raycasting system. Level creator was also done earlier, during [this](https://github.com/okkindel/TankGame) project.
 
 Technique was used in Wolfenstain 3D. Some effects was added by me.
 
@@ -11,11 +11,11 @@ Technique was used in Wolfenstain 3D. Some effects was added by me.
 * Textured cellig
 * Simple shading
 * Fog on distance
-* Walkig :)
+* Walkig
 * Static 2D sprites
 * Simple enemies with simle AI
 * Random maze generator in Java
-* Level Creator in Python
+* Level creator in Python
 
 ## Game appearance
 
