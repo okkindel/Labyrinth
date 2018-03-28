@@ -21,7 +21,6 @@ var $ = function (id) {
 //----------------------------------------------------------
 
 var lastGameCycleTime = 0;
-var lastRenderCycleTime = 0;
 var gameCycleDelay = 1000 / 30;
 
 //----------------------------------------------------------
@@ -29,7 +28,7 @@ var gameCycleDelay = 1000 / 30;
 gameCycle = function () {
 
     let now = new Date().getTime();
-    var timeDelta = now - lastGameCycleTime;
+    let timeDelta = now - lastGameCycleTime;
 
     move(timeDelta);
 
