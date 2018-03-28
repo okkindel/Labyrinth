@@ -8,8 +8,6 @@ Technique was used in Wolfenstain 3D. Some effects was added by me.
 
 <p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/src/assets/screens/screen.png?raw=true"></p>
 
-<p align="center"><img title="game screen" src="https://github.com/okkindel/Labirynth/blob/master/src/assets/screens/screen2.png?raw=true"></p>
-
 ## Live example
 
 https://okkindel.github.io/maze/
