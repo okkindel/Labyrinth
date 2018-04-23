@@ -1,11 +1,11 @@
 initEnemies = function () {
 
     addEnemies();
-    let screen = $('screen');
-    for (let i = 0; i < mapEnemies.length; i++) {
-        let enemy = mapEnemies[i];
-        let type = enemyTypes[enemy.type];
-        let img = document.createElement('img');
+    var screen = $('screen');
+    for (var i = 0; i < mapEnemies.length; i++) {
+        var enemy = mapEnemies[i];
+        var type = enemyTypes[enemy.type];
+        var img = document.createElement('img');
         img.src = type.img;
         img.style.display = "none";
         img.style.position = "absolute";
@@ -52,7 +52,7 @@ var enemyTypes = [
 
 addEnemies = function () {
 
-    let enemy = {
+    var enemy = {
         type: 0,
         x: 8.5,
         y: 27.5
@@ -63,23 +63,23 @@ addEnemies = function () {
 //----------------------------------------------------------
 
 renderEnemies = function () {
-    for (let i = 0; i < enemies.length; i++) {
-        let enemy = enemies[i];
-        let dx = enemy.x - player.x;
-        let dy = enemy.y - player.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
+    for (var i = 0; i < enemies.length; i++) {
+        var enemy = enemies[i];
+        var dx = enemy.x - player.x;
+        var dy = enemy.y - player.y;
+        var distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 10) {
 
-            let angle = Math.atan2(dy, dx) - player.rotation;
+            var angle = Math.atan2(dy, dx) - player.rotation;
             if (angle < -Math.PI) angle += Math.PI * 2;
             if (angle >= Math.PI) angle -= Math.PI * 2;
             if ((angle > -Math.PI) && (angle < Math.PI)) {
 
-                let img = enemy.img;
-                let size = viewDist / (Math.cos(angle) * distance);
-                let x = Math.tan(angle) * viewDist;
-                let prevStyle = enemy.prevStyle;
+                var img = enemy.img;
+                var size = viewDist / (Math.cos(angle) * distance);
+                var x = Math.tan(angle) * viewDist;
+                var prevStyle = enemy.prevStyle;
 
                 if (size != prevStyle.height) {
                     img.style.height = size + 'px';
@@ -124,16 +124,16 @@ renderEnemies = function () {
 
 enemyAI = function (enemy) {
 
-    let dx = player.x - enemy.x;
-    let dy = player.y - enemy.y;
-    let distance = Math.sqrt(dx * dx + dy * dy);
+    var dx = player.x - enemy.x;
+    var dy = player.y - enemy.y;
+    var distance = Math.sqrt(dx * dx + dy * dy);
     if ((distance > 2) && (distance < 8)) {
-        let angle = Math.atan2(dy, dx);
+        var angle = Math.atan2(dy, dx);
         enemy.rotDeg = angle * 180 / Math.PI;
         enemy.rot = angle;
         enemy.speed = 1;
-        let walkCycleTime = 1000;
-        let numWalkSprites = 7;
+        var walkCycleTime = 1000;
+        var numWalkSprites = 7;
         enemy.state = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
     } else {
         enemy.state = 0;
@@ -146,12 +146,12 @@ enemyAI = function (enemy) {
 
 enemyMove = function (enemy) {
 
-    let moveStep = enemy.speed * enemy.moveSpeed;
-    let newX = enemy.x + Math.cos(enemy.rot) * moveStep;
-    let newY = enemy.y + Math.sin(enemy.rot) * moveStep;
+    var moveStep = enemy.speed * enemy.moveSpeed;
+    var newX = enemy.x + Math.cos(enemy.rot) * moveStep;
+    var newY = enemy.y + Math.sin(enemy.rot) * moveStep;
 
-    // lets take player's collision checker
-    let pos = checkCollision(enemy.x, enemy.y, newX, newY, 0.35);
+    // vars take player's collision checker
+    var pos = checkCollision(enemy.x, enemy.y, newX, newY, 0.35);
     enemy.x = pos.x;
     enemy.y = pos.y;
 }

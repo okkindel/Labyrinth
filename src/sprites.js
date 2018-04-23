@@ -1,15 +1,15 @@
 initSprites = function () {
 
     addItems();
-    for (let i = 0; i < map.length; i++) {
+    for (var i = 0; i < map.length; i++) {
         spritePosition[i] = [];
     }
 
-    let screen = $('screen');
-    for (let i = 0; i < mapSprites.length; i++) {
-        let sprite = mapSprites[i];
-        let itemType = itemTypes[sprite.type];
-        let img = document.createElement('img');
+    var screen = $('screen');
+    for (var i = 0; i < mapSprites.length; i++) {
+        var sprite = mapSprites[i];
+        var itemType = itemTypes[sprite.type];
+        var img = document.createElement('img');
         img.src = itemType.img;
         img.style.display = "none";
         img.style.position = "absolute";
@@ -35,13 +35,13 @@ var itemTypes = [
 //----------------------------------------------------------
 
 addItems = function () {
-    for (let y = 0; y < mapHeight; y++) {
-        for (let x = 0; x < mapWidth; x++) {
-            let wall = map[y][x];
+    for (var y = 0; y < mapHeight; y++) {
+        for (var x = 0; x < mapWidth; x++) {
+            var wall = map[y][x];
 
             if (wall == 0)
                 if (Math.random() * 100 < 2) {
-                    let item = {
+                    var item = {
                         type: 0,
                         x: x,
                         y: y
@@ -55,8 +55,8 @@ addItems = function () {
 //----------------------------------------------------------
 
 clearSprites = function () {
-    for (let i = 0; i < sprites.length; i++) {
-        let sprite = sprites[i];
+    for (var i = 0; i < sprites.length; i++) {
+        var sprite = sprites[i];
         sprite.visible = false;
     }
 }
@@ -64,23 +64,23 @@ clearSprites = function () {
 //----------------------------------------------------------
 
 renderSprites = function () {
-    for (let i = 0; i < sprites.length; i++) {
+    for (var i = 0; i < sprites.length; i++) {
 
-        let sprite = sprites[i];
+        var sprite = sprites[i];
         if (sprite.visible) {
 
-            let img = sprite.img;
+            var img = sprite.img;
             img.style.display = "block";
 
             // translate position to viewer space
-            let dx = sprite.x + 0.5 - player.x;
-            let dy = sprite.y + 0.5 - player.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            let angle = Math.atan2(dy, dx) - player.rotation;
-            let size = viewDist / (Math.cos(angle) * distance);
+            var dx = sprite.x + 0.5 - player.x;
+            var dy = sprite.y + 0.5 - player.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            var angle = Math.atan2(dy, dx) - player.rotation;
+            var size = viewDist / (Math.cos(angle) * distance);
 
             // x-position on screen
-            let x = Math.tan(angle) * viewDist;
+            var x = Math.tan(angle) * viewDist;
             img.style.left = (screenWidth / 2 + x - size / 2) + "px";
             // y is constant
             img.style.top = ((screenHeight - size) / 2) + "px";

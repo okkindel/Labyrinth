@@ -27,12 +27,12 @@ var gameCycleDelay = 1000 / 30;
 
 gameCycle = function () {
 
-    let now = new Date().getTime();
-    let timeDelta = now - lastGameCycleTime;
+    var now = new Date().getTime();
+    var timeDelta = now - lastGameCycleTime;
 
     move(timeDelta);
 
-    let cycleDelay = gameCycleDelay;
+    var cycleDelay = gameCycleDelay;
     if (timeDelta > cycleDelay) {
         cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay))
     }

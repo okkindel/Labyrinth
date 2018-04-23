@@ -46,9 +46,9 @@ var mapScale = 8;	    // How many pixels to draw a map block
 
 drawMap = function () {
 
-    let container = $("map");
-    let miniMap = $("minimap");
-    let objects = $("objects");
+    var container = $("map");
+    var miniMap = $("minimap");
+    var objects = $("objects");
 
     //canvas size
     miniMap.width = mapWidth * mapScale;
@@ -56,17 +56,17 @@ drawMap = function () {
     objects.width = miniMap.width;
     objects.height = miniMap.height;
 
-    let widthDim = (mapWidth * mapScale) + "px";
-    let heightDim = (mapHeight * mapScale) + "px";
+    var widthDim = (mapWidth * mapScale) + "px";
+    var heightDim = (mapHeight * mapScale) + "px";
     miniMap.style.width = objects.style.width = container.style.width = widthDim;
     miniMap.style.height = objects.style.height = container.style.height = heightDim;
 
-    let ctx = miniMap.getContext("2d");
+    var ctx = miniMap.getContext("2d");
 
-    for (let y = 0; y < mapHeight; y++) {
-        for (let x = 0; x < mapWidth; x++) {
+    for (var y = 0; y < mapHeight; y++) {
+        for (var x = 0; x < mapWidth; x++) {
 
-            let wall = map[y][x];
+            var wall = map[y][x];
 
             if (wall > 0) {
 
@@ -94,10 +94,10 @@ drawMap = function () {
 //----------------------------------------------------------
 
 updateMap = function () {
-    let miniMap = $("minimap");
-    let objects = $("objects");
+    var miniMap = $("minimap");
+    var objects = $("objects");
 
-    let objectCtx = objects.getContext("2d");
+    var objectCtx = objects.getContext("2d");
     objectCtx.clearRect(0, 0, miniMap.width, miniMap.height);
 
     objectCtx.fillStyle = "black";
@@ -108,8 +108,8 @@ updateMap = function () {
     );
 
     // enemy drawing
-    for (let i = 0; i < enemies.length; i++) {
-        let enemy = enemies[i];
+    for (var i = 0; i < enemies.length; i++) {
+        var enemy = enemies[i];
         objectCtx.fillStyle = "black";
         objectCtx.fillRect(
             enemy.x * mapScale - 2,

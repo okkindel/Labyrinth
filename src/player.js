@@ -13,8 +13,8 @@ var player = {
 
 move = function (timeDelta) {
 
-    let move_abs = timeDelta / gameCycleDelay;
-    let moveStep
+    var move_abs = timeDelta / gameCycleDelay;
+    var moveStep
     if (!player.horizontal) {
         moveStep = move_abs * player.vertical * player.moveSpeed;
         player.rotation += move_abs * player.direction * player.rotationSpeed * Math.PI / 180;
@@ -25,7 +25,7 @@ move = function (timeDelta) {
     while (player.rotation < 0) player.rotation += Math.PI * 2;
     while (player.rotation >= Math.PI * 2) player.rotation -= Math.PI * 2;
 
-    let newX, newY;
+    var newX, newY;
     if (!player.horizontal) {
         newX = player.x + Math.cos(player.rotation) * moveStep;
         newY = player.y + Math.sin(player.rotation) * moveStep;
@@ -34,7 +34,7 @@ move = function (timeDelta) {
         newY = player.y + Math.sin(player.rotation + 90 * Math.PI / 180) * moveStep;
     }
 
-    let position = checkCollision(player.x, player.y, newX, newY, 0.35);
+    var position = checkCollision(player.x, player.y, newX, newY, 0.35);
     player.x = position.x;
     player.y = position.y;
 }
@@ -43,7 +43,7 @@ move = function (timeDelta) {
 
 checkCollision = function (fromX, fromY, toX, toY, radius) {
 
-    let position = {
+    var position = {
         x: fromX,
         y: fromY
     };
@@ -51,8 +51,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth)
         return position;
 
-    let blockX = toX >> 0;
-    let blockY = toY >> 0;
+    var blockX = toX >> 0;
+    var blockY = toY >> 0;
 
     if (isBlocking(blockX, blockY)) {
         return position;
@@ -61,10 +61,10 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     position.x = toX;
     position.y = toY;
 
-    let top = isBlocking(blockX, blockY - 1);
-    let bottom = isBlocking(blockX, blockY + 1);
-    let left = isBlocking(blockX - 1, blockY);
-    let right = isBlocking(blockX + 1, blockY);
+    var top = isBlocking(blockX, blockY - 1);
+    var bottom = isBlocking(blockX, blockY + 1);
+    var left = isBlocking(blockX - 1, blockY);
+    var right = isBlocking(blockX + 1, blockY);
 
     if (top != 0 && toY - blockY < radius) {
         toY = position.y = blockY + radius;
@@ -81,8 +81,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
 
     // is tile to the top-left a wall
     if (isBlocking(blockX - 1, blockY - 1) != 0 && !(top != 0 && left != 0)) {
-        let dx = toX - blockX;
-        let dy = toY - blockY;
+        var dx = toX - blockX;
+        var dy = toY - blockY;
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + radius;
@@ -92,8 +92,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the top-right a wall
     if (isBlocking(blockX + 1, blockY - 1) != 0 && !(top != 0 && right != 0)) {
-        let dx = toX - (blockX + 1);
-        let dy = toY - blockY;
+        var dx = toX - (blockX + 1);
+        var dy = toY - blockY;
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + 1 - radius;
@@ -103,8 +103,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the bottom-left a wall
     if (isBlocking(blockX - 1, blockY + 1) != 0 && !(bottom != 0 && bottom != 0)) {
-        let dx = toX - blockX;
-        let dy = toY - (blockY + 1);
+        var dx = toX - blockX;
+        var dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + radius;
@@ -114,8 +114,8 @@ checkCollision = function (fromX, fromY, toX, toY, radius) {
     }
     // is tile to the bottom-right a wall
     if (isBlocking(blockX + 1, blockY + 1) != 0 && !(bottom != 0 && right != 0)) {
-        let dx = toX - (blockX + 1);
-        let dy = toY - (blockY + 1);
+        var dx = toX - (blockX + 1);
+        var dy = toY - (blockY + 1);
         if (dx * dx + dy * dy < radius * radius) {
             if (dx * dx > dy * dy)
                 toX = position.x = blockX + 1 - radius;
@@ -143,8 +143,8 @@ function isBlocking(x, y) {
 //----------------------------------------------------------
 
 function drawRay(rayX, rayY) {
-    let objects = $("objects");
-    let objectCtx = objects.getContext("2d");
+    var objects = $("objects");
+    var objectCtx = objects.getContext("2d");
 
     objectCtx.strokeStyle = "rgba(100,100,100,0.3)";
     objectCtx.lineWidth = 0.5;
