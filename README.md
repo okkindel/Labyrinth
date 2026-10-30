@@ -25,7 +25,7 @@ Technique was used in Wolfenstain 3D. Some effects was added by me.
 
 ## Live example
 
-https://okkindel.github.io/maze/
+https://okkindel.github.io/projects/maze/
 
 ## Todo
 
